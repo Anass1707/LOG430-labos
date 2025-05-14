@@ -1,0 +1,15 @@
+# Dossiers à ignorer
+target/
+.mvn/
+.git/
+.idea/
+.vscode/
+node_modules/
+
+# Fichiers sensibles
+*.log
+*.pem
+*.key
+*.env
+*.iml
+.DS_Store
