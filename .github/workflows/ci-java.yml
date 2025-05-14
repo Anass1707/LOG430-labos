@@ -64,4 +64,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/anass1707/log430_labos:v0
+          tags: ${{ secrets.DOCKER_USERNAME }}/log430_labos:v0
