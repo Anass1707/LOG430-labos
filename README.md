@@ -1,1 +1,1 @@
-# LOG430_labos
+# LOG430-labos
