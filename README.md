@@ -19,7 +19,7 @@ Pour pouvoir exécuter cette application localement il y a des prérequis néces
 Il suffit de lancer la commande "docker-compose up --build" pour reconstruire l'image du projet et son conteneur et lancer le service.
 
 ### Note
-Si vous lancer l'application via une VM linux, que ça soit avec les commande mvn ou docker, une étape de plus est nécessaire avant d'ouvrir votre navigateur: 
+Si vous lancer l'application via une VM linux, que ça soit avec les commandes mvn ou docker, une étape de plus est nécessaire avant d'ouvrir votre navigateur: 
 
 * Sur windows, ouvrir un CMD et lancer la commande "ssh -L 8080:localhost:8080 log430@10.194.32.178". Ensuite, une saisie du mot de passe est necessaire. Une fois la connexion est réussie, un tunnel est établi avec la VM et vous pouvez ouvrir votre navigateur et accéder à http://localhost:8080
 
