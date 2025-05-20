@@ -62,3 +62,5 @@ LOG430-labos/
 ├── Dockerfile                    # Image Docker de l'application
 └── docker-compose.yml            # Orchestration multi-conteneurs
 ```
+# Choix techniques
+Mon choix d'utiliser Spring Boot et GitHub Actions s'appuie sur mon expérience acquise lors de mes expériences (projets précédents et stages), où j'ai pu constater leur efficacité et leur valeur ajoutée dans le cycle de développement logiciel.
