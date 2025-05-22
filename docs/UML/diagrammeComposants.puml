@@ -1,0 +1,28 @@
+@startuml
+package "Présentation" {
+  [ProduitController] <<Controller>>
+  [VenteController] <<Controller>>
+  [RetourController] <<Controller>>
+}
+
+package "Logique Métier" {
+  [ProduitService] <<Service>>
+  [VenteService] <<Service>>
+  [RetourService] <<Service>>
+}
+
+package "Persistance" {
+  [ProduitRepository] <<Repository>>
+  [VenteRepository] <<Repository>>
+  [RetourRepository] <<Repository>>
+}
+
+' Relations entre packages/modules
+[ProduitController] --> [ProduitService]
+[VenteController] --> [VenteService]
+[RetourController] --> [RetourService]
+
+[ProduitService] --> [ProduitRepository]
+[VenteService] --> [VenteRepository]
+[RetourService] --> [RetourRepository]
+@enduml

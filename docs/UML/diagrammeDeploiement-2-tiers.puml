@@ -1,0 +1,18 @@
+@startuml
+node "Machine locale" {
+
+  node "Application" {
+    component "Contrôleur REST\n(@RestController)"
+    component "Service\n(@Service)"
+    component "Repository\n(@Repository)"
+  }
+
+  node "Base de données" {
+    database "SGBD (PostgreSQL)"
+  }
+
+  "Contrôleur REST\n(@RestController)" --> "Service\n(@Service)"
+  "Service\n(@Service)" --> "Repository\n(@Repository)"
+  "Repository\n(@Repository)" --> "SGBD (PostgreSQL)" : JDBC
+}
+@enduml

@@ -1,0 +1,37 @@
+@startuml DiagrammeClasses
+
+class Produit {
+  - id: int
+  - nom: string
+  - categorie: string
+  - prix: float
+  - quantite: int
+}
+
+class LigneVente {
+  - idProduit: int
+  - idVente: int
+  - quantite: int
+  - sousTotal: float
+}
+
+class Vente {
+  - id: int
+  - date: Date
+  - produits: List<LigneVente>
+  - total: float
+}
+
+class Retour {
+  - id: int
+  - vente: Vente
+  - dateRetour: Date
+  - motif: string
+}
+
+
+Produit "1" <-- "1" LigneVente : référencé dans >
+Vente "1" *-- "*" LigneVente : contient >
+Retour "1" --> "1" Vente : annule >
+
+@enduml

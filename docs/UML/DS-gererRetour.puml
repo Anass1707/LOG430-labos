@@ -1,0 +1,21 @@
+@startuml
+actor Client
+participant RetourController
+participant RetourService
+participant VenteRepository
+participant ProduitRepository
+participant RetourRepository
+database BaseDeDonnees
+
+Client -> RetourController : POST /retours (venteId)
+RetourController -> RetourService : annulerVente(venteId)
+RetourService -> VenteRepository : findById(venteId)
+VenteRepository -> BaseDeDonnees : SELECT * FROM vente
+BaseDeDonnees --> VenteRepository : vente + produits
+RetourService -> ProduitRepository : mise à jour stock
+ProduitRepository -> BaseDeDonnees : UPDATE produit SET ...
+RetourService -> RetourRepository : save(retour)
+RetourRepository -> BaseDeDonnees : INSERT INTO retour ...
+RetourService --> RetourController : confirmation
+RetourController --> Client : HTTP 200 OK + JSON
+@enduml

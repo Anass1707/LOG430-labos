@@ -1,0 +1,16 @@
+@startuml
+actor Client
+participant ProduitController
+participant ProduitService
+participant ProduitRepository
+database BaseDeDonnees
+
+Client -> ProduitController : GET /produits?nom=${nom}
+ProduitController -> ProduitService : rechercherParNom(nom)
+ProduitService -> ProduitRepository : findByNom(nom)
+ProduitRepository -> BaseDeDonnees : SELECT * FROM produit WHERE nom = ?
+BaseDeDonnees --> ProduitRepository : Résultats
+ProduitRepository --> ProduitService : Liste<Produit>
+ProduitService --> ProduitController : Liste<Produit>
+ProduitController --> Client : HTTP 200 OK + JSON
+@enduml
