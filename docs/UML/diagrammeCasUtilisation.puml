@@ -1,0 +1,21 @@
+@startuml
+actor Utilisateur as u
+
+rectangle "Application de caisse" {
+  usecase "Rechercher un produit par ID" as UC1
+  usecase "Rechercher un produit par nom" as UC2
+  usecase "Rechercher un produit par  catégorie" as UC3
+  usecase "Créer une vente (produit selection de produits)" as UC4
+  usecase "Enregistrer une vente" as UC5
+  usecase "Annuler une vente" as UC6
+  usecase "Consulter le stock" as UC7
+}
+
+u --> UC1
+u --> UC2
+u --> UC3
+u --> UC4
+u --> UC5
+u --> UC6
+u --> UC7
+@enduml

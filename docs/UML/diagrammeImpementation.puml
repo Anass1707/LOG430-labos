@@ -1,0 +1,32 @@
+@startuml
+package "Présentation" {
+  [ProduitController] <<Controller>>
+  [VenteController] <<Controller>>
+  [RetourController] <<Controller>>
+  [UtilisateurController] <<Controller>>
+}
+
+package "Logique Métier" {
+  [ProduitService] <<Service>>
+  [VenteService] <<Service>>
+  [RetourService] <<Service>>
+  [UtilisateurService] <<Service>>
+}
+
+package "Persistance" {
+  [ProduitRepository] <<Repository>>
+  [VenteRepository] <<Repository>>
+  [RetourRepository] <<Repository>>
+  [UtilisateurRepository] <<Repository>>
+}
+
+[ProduitController] --> [ProduitService]
+[VenteController] --> [VenteService]
+[RetourController] --> [RetourService]
+[UtilisateurController] --> [UtilisateurService]
+
+[ProduitService] --> [ProduitRepository]
+[VenteService] --> [VenteRepository]
+[RetourService] --> [RetourRepository]
+[UtilisateurService] --> [UtilisateurRepository]
+@enduml
