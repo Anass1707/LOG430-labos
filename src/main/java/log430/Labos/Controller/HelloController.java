@@ -12,12 +12,12 @@ public class HelloController {
     public HelloController(UtilisateurRepository utilisateurRepository) {
         this.utilisateurRepository = utilisateurRepository;
     }
-    // @GetMapping("/")
-    // public String helloWorld() {
-    //     return "Hello, World!";
-    // }
-
     @GetMapping("/")
+    public String helloWorld() {
+        return "Hello, World!";
+    }
+
+    @GetMapping("/users")
     public List<Utilisateur> getAllUtilisateurs() {
         final List<Utilisateur> utilisateurs = utilisateurRepository.findAll();
         if (utilisateurs.isEmpty()) {
