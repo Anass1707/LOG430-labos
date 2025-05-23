@@ -17,11 +17,11 @@ class LigneVente {
   - idProduit: int
   - idVente: int
   - quantite: int
-  - sousTotal: float
 }
 
 class Vente {
   - id: int
+  - idUtilisateur: int
   - date: Date
   - produits: List<LigneVente>
   - total: float
@@ -29,7 +29,7 @@ class Vente {
 
 class Retour {
   - id: int
-  - vente: Vente
+  - idVente: int
   - dateRetour: Date
   - motif: string
 }
