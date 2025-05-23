@@ -51,7 +51,7 @@ Un workflow a été mis en place afin d'automatiser les étapes de vérification
 - L'étape "Build and push Docker image": cette étape est lancée uniquement si l'étape "Build and test" est réussie. Lors de cette étape une image docker est créée et est publiée sur Docker Hub.
 
 Voici une éxecution du workflow: 
-![Exécution du workflow CI](img/ci-java.png)
+![Exécution du workflow CI](../img/ci-java.png)
 
 # Architecture du projet
 Ce projet suit une architecture classique d’application Spring Boot :
