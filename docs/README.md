@@ -1,5 +1,26 @@
 # LOG430-labos
-LOG430-labo est un projet spring-boot très simple qui affiche un message "Hello, World!".
+LOG430-labo est une API Rest qui permet de gérer un système de caisse via des requettes HTTP.
+
+# Besoins fonctionnels
+
+## Gestion des produits
+1. Rechercher un produit par identifiant, nom ou catégorie.
+2. Afficher les détails d’un produit .
+3. Consulter le stock.
+
+## Gestion des ventes
+1. Enregistrer une vente.
+2. Créer une vente (produit selection de produits).
+3. Annuler une vente
+
+# Besoins non-fonctionnels
+
+## Maintenabilité
+- Code organisé en couches (présentation, métier, persistance).
+- Tests unitaires et d’intégration automatisés.
+
+## Extensibilité
+- Possibilité d’ajouter facilement de nouvelles fonctionnalités.
 
 # Démarage
 Pour pouvoir exécuter cette application localement il y a des prérequis nécessaires.

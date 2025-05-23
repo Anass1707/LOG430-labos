@@ -1,5 +1,10 @@
 @startuml DiagrammeClasses
 
+class Utilisateur {
+  - id: int
+  - nom: string
+  - email: string
+}
 class Produit {
   - id: int
   - nom: string
@@ -29,9 +34,10 @@ class Retour {
   - motif: string
 }
 
-
-Produit "1" <-- "1" LigneVente : référencé dans >
+Produit "1" --> "1" LigneVente : référencé dans >
 Vente "1" *-- "*" LigneVente : contient >
 Retour "1" --> "1" Vente : annule >
-
+Utilisateur "1" --> "*" Vente : effectue >
+Utilisateur "1" --> "*" Retour : effectue >
+Utilisateur "1" --> "*" Produit : consulte >
 @enduml
