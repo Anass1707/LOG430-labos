@@ -1,5 +1,5 @@
 # LOG430-labos
-LOG430-labo est une API Rest qui permet de gérer un système de caisse via des requettes HTTP.
+LOG430-labo est une API Rest qui permet de gérer un système de caisse via des requettes HTTP. Vous pouvez consulter [les diagrammes liés à ce projet ](diagrammes.md).
 
 # Besoins fonctionnels
 
@@ -64,6 +64,7 @@ Ce projet suit une architecture classique d’application Spring Boot :
 # Structure du projet
 Voici une représentation de ce projet Spring Boot.
 
+
 ```
 LOG430-labos/
 ├── .github/
@@ -71,20 +72,45 @@ LOG430-labos/
 │       └── ci-java.yml           # Workflow CI/CD GitHub Actions
 ├── src/
 │   ├── main/
-│   │   └── java/                 # Code source Java
-│   │       └── ...               # (fichiers sources Java)
+│   │   ├── java/
+│   │   │   └── log430/
+│   │   │       └── Labos/
+│   │   │           ├── Controller/    # Contrôleurs REST (ProduitController, VenteController, RetourController, HelloController, etc.)
+│   │   │           ├── Entities/      # Entités JPA (Produit, Vente, LigneVente, Utilisateur, Retour)
+│   │   │           ├── Repositories/  # Interfaces Spring Data JPA (ProduitRepository, VenteRepository, UtilisateurRepository)
+│   │   │           └── Services/      # Logique métier (ProduitService, VenteService, RetourService)
+│   │   └── resources/
+│   │       └── application.properties # Configuration Spring Boot (BD, port, etc.)
 │   └── test/
-│       └── java/                 # Tests unitaires Java
-│           └── ...               # (fichiers de test)
-├── .dockerignore                 # Fichiers/dossiers ignorés par docker
-├── .gitignore                    # Fichiers/dossiers ignorés par git
-├── pom.xml                       # Configuration Maven
-├── README.md                     # Documentation du projet
-├── Dockerfile                    # Image Docker de l'application
-└── docker-compose.yml            # Orchestration multi-conteneurs
+│       └── java/
+│           └── log430/
+│               └── Labos/
+│                   ├── Controller/    # Tests unitaires des contrôleurs
+├── .dockerignore                     # Fichiers/dossiers ignorés par Docker
+├── .gitignore                        # Fichiers/dossiers ignorés par Git
+├── pom.xml                           # Configuration Maven (dépendances, plugins, etc.)
+├── Dockerfile                        # Image Docker de l'application
+├── docker-compose.yml                # Orchestration multi-conteneurs (app + base de données)
+├── docs/
+│   ├── README.md                     # Documentation structurée 
+│   └── UML/
+│   │   ├── diagrammeClasses.puml         # Diagramme de classes PlantUML
+│   │   ├── diagrammeSequence.puml        # Diagramme de séquence PlantUML
+│   │   ├── diagrammeCasUtilisation.puml  # Diagramme de cas d'utilisation PlantUML
+│   │   ├── diagrammeDeploiement.puml     # Diagramme de déploiement PlantUML
+│   └── ADR/
+│       ├── 0001-choix-architecture.md    # Exemple de décision d'architecture
+│       ├── 0002-choix-bdd.md             # Exemple de décision sur la base de données
+├── img/
+│   ├── ci-java.png                   # Illustration du workflow CI
+│   └── indexes.png                   # Illustration des indexes de la base de données
 ```
 # Choix techniques
 Mon choix d'utiliser Spring Boot et GitHub Actions s'appuie sur mon expérience acquise lors de mes expériences (projets précédents et stages), où j'ai pu constater leur efficacité et leur valeur ajoutée dans le cycle de développement logiciel.
+
+# Indexes dans la BD
+Chaque clé primaire d'une table a un index primaire, ainsi que la colone `email` de la table `utilisateur` car il est unique. Voici une présentation de tous les indexes:
+![Indexes](../img/indexes.png)
 
 # Effectuer les appels API
 Sur la console de la vm il suffit de lancer ces commandes.
