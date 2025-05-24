@@ -1,6 +1,12 @@
 package log430.Labos.Entities;
 import jakarta.persistence.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "utilisateurs")
@@ -43,7 +49,7 @@ public class Utilisateur {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public List<Vente> getVentes() {
         return ventes;
     }
@@ -51,7 +57,7 @@ public class Utilisateur {
     public void setVentes(List<Vente> ventes) {
         this.ventes = ventes;
     }
-
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public List<Retour> getRetours() {
         return retours;
     }
@@ -59,4 +65,5 @@ public class Utilisateur {
     public void setRetours(List<Retour> retours) {
         this.retours = retours;
     }
+    
 }

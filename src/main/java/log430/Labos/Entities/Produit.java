@@ -1,7 +1,12 @@
 package log430.Labos.Entities;
 import jakarta.persistence.*;
+
+import java.util.HashMap;
 import java.util.List;
-import log430.Labos.Entities.LigneVente;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "produits")
@@ -59,6 +64,7 @@ public class Produit {
     public void setQuantite(int quantite) {
         this.quantite = quantite;
     }
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public List<LigneVente> getLignesVente() {
         return lignesVente;
     }

@@ -31,4 +31,11 @@ public class ProduitService {
     public void deleteProduit(Long id) {
         produitRepository.deleteById(id);
     }
+
+    public Produit getProduitByNom(String nom) {
+        return produitRepository.findByNom(nom);
+    }
+    public List<Produit> getProduitsByCategorie(String categorie) {
+        return produitRepository.findByCategorie(categorie);
+    }
 }

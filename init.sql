@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
 );
 
 INSERT INTO utilisateurs (nom, email)
-VALUES ('Jean Dupont', 'jean.dupont@example.com');
+VALUES ('Jean Dupont', 'jean.dupont@example.com'),
+('Vinicius Junior', 'vini.junior@example.com');
 
 -- Table: Produit
 CREATE TABLE IF NOT EXISTS produits (
@@ -16,6 +17,11 @@ CREATE TABLE IF NOT EXISTS produits (
   prix NUMERIC(10, 2) NOT NULL,
   quantite INT NOT NULL
 );
+
+-- INSERT INTO produits (nom, categorie, prix, quantite) VALUES
+-- ('Clavier', 'Électronique', 45.90, 20),
+-- ('Souris', 'Électronique', 25.00, 50),
+-- ('Chaise', 'Mobilier', 120.50, 10);
 
 -- Table: Vente
 CREATE TABLE IF NOT EXISTS ventes (

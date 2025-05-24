@@ -8,32 +8,31 @@ import java.util.Objects;
 @Embeddable
 public class LigneVenteId implements Serializable {
 
-    private Integer idVente;
-    private Integer idProduit;
+    private Long idVente;
+    private Long idProduit;
 
     public LigneVenteId() {
     }
 
-    public LigneVenteId(Integer idVente, Integer idProduit) {
+    public LigneVenteId(Long idVente, Long idProduit) {
         this.idVente = idVente;
         this.idProduit = idProduit;
     }
 
     // Getters et Setters
-    public Integer getIdVente() {
+    public Long getIdVente() {
         return idVente;
     }
-    public void setIdVente(Integer idVente) {
+    public void setIdVente(Long idVente) {
         this.idVente = idVente;
     }
-    public Integer getIdProduit() {
+    public Long getIdProduit() {
         return idProduit;
     }
-    public void setIdProduit(Integer idProduit) {
+    public void setIdProduit(Long idProduit) {
         this.idProduit = idProduit;
     }
 
-    // equals() et hashCode() requis pour une clé composite
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

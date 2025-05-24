@@ -85,3 +85,45 @@ LOG430-labos/
 ```
 # Choix techniques
 Mon choix d'utiliser Spring Boot et GitHub Actions s'appuie sur mon expérience acquise lors de mes expériences (projets précédents et stages), où j'ai pu constater leur efficacité et leur valeur ajoutée dans le cycle de développement logiciel.
+
+# Effectuer les appels API
+Sur la console de la vm il suffit de lancer ces commandes.
+
+## Chercher produit par id
+- curl -X GET http://localhost:8080/produits/1
+
+## Chercher produit par nom
+- curl -X GET http://localhost:8080/produits/nom?nom=Chaise
+
+## Chercher produit par catégorie
+- curl -X GET http://localhost:8080/produits/categorie?categorie=Mobilier
+ 
+- curl -X GET http://localhost:8080/produits/categorie?categorie=Électronique
+
+## Consulter stock
+
+- curl -X GET http://localhost:8080/produits/
+
+## Créer une vente
+ curl -X POST http://localhost:8080/ventes   -H "Content-Type: application/json"   -d '{
+    "utilisateur": { "id": 2 },
+    "dateVente": "2025-05-23",
+    "lignesVente": [
+      {
+        "produit": { "id": 1 },
+        "quantite": 2
+      },
+      {
+        "produit": { "id": 2 },
+        "quantite": 3
+      }
+    ]
+  }'
+## Annuler une vente (faire un retour)
+curl -X POST http://localhost:8080/retours \
+  -H "Content-Type: application/json" \
+  -d '{
+    "vente": { "id": 1 },
+    "dateRetour": "2025-05-23",
+    "motif": "Produit défectueux"
+  }'

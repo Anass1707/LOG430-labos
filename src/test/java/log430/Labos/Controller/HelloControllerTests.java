@@ -27,7 +27,7 @@ public class HelloControllerTests {
     @Autowired
     private MockMvc mockMvc;
 
-        @MockBean
+    @MockBean
     private UtilisateurRepository utilisateurRepository;
 
     @Test

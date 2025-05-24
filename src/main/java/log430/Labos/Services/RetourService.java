@@ -16,7 +16,7 @@ public class RetourService {
         this.retourRepository = retourRepository;
     }
 
-    public Retour createRetour(Retour retour) {
+    public Retour effectuerRetour(Retour retour) {
         return retourRepository.save(retour);
     }
 
