@@ -148,8 +148,8 @@ LOG430-labos/
 │   └── indexes.png                   # Illustration des indexes de la base de données
 ```
 # Choix techniques
-Mon choix d'utiliser Spring Boot et GitHub Actions s'appuie sur mon expérience acquise lors de mes expériences (projets précédents et stages), où j'ai pu constater leur efficacité et leur valeur ajoutée dans le cycle de développement logiciel. J'ai choisi PostgreSQL comme base de données car il était évident de prendre une base de données relationnelle dans le contexte de ce projet. De plus, psql me permet de faire des requêtes complexes et des jointures, contrairement à MongoDB que j'ai hésité de prendre. C'est ma première expérience avec psql.
+Mon choix d'utiliser Spring Boot et GitHub Actions s'appuie sur mon expérience acquise lors de mes expériences (projets précédents et stages), où j'ai pu constater leur efficacité et leur valeur ajoutée dans le cycle de développement logiciel. J'ai choisi PostgreSQL comme base de données car il était évident de prendre une base de données relationnelle dans le contexte de ce projet. De plus, psql me permet de faire des requêtes complexes et des jointures, contrairement à MySql par exemple. C'est ma première expérience avec psql.
 
 # Indexes dans la BD
-Chaque clé primaire d'une table a un index primaire, ainsi que la colone `email` de la table `utilisateur` car il est unique. Voici une présentation de tous les indexes:
+Chaque clé primaire d'une table a un index primaire, ainsi que la colone `email` de la table `utilisateurs` car il est un champs unique (un courriel peut être utilisé par un seul utilisateur). Voici une présentation de tous les indexes:
 ![Indexes](../img/indexes.png)

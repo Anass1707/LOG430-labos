@@ -1,5 +1,4 @@
 @startuml
-node "Machine locale" {
 
   node "Application" {
     component "Contrôleur REST\n(@RestController)"
@@ -14,5 +13,4 @@ node "Machine locale" {
   "Contrôleur REST\n(@RestController)" --> "Service\n(@Service)"
   "Service\n(@Service)" --> "Repository\n(@Repository)"
   "Repository\n(@Repository)" --> "SGBD (PostgreSQL)" : JDBC
-}
 @enduml
