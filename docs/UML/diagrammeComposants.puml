@@ -1,5 +1,4 @@
 @startuml
-actor Utilisateur
 
 package "Présentation" {
   [ProduitController] <<Controller>>
@@ -19,14 +18,12 @@ package "Persistance" {
   [VenteRepository] <<Repository>>
   [RetourRepository] <<Repository>>
 }
-
-Utilisateur --> [ProduitController]
-Utilisateur --> [VenteController]
-Utilisateur --> [RetourController]
-
-[ProduitController] --> [Thymeleaf]
-[VenteController] --> [Thymeleaf]
-[RetourController] --> [Thymeleaf]
+package "Base de données" {
+  [PostgreSQL] <<Database>>
+}
+[ProduitController] -up-> [Thymeleaf]
+[VenteController] -up-> [Thymeleaf]
+[RetourController] -up-> [Thymeleaf]
 
 [ProduitController] --> [ProduitService]
 [VenteController] --> [VenteService]
@@ -36,4 +33,7 @@ Utilisateur --> [RetourController]
 [VenteService] --> [VenteRepository]
 [RetourService] --> [RetourRepository]
 
+[ProduitRepository] --> [PostgreSQL]
+[VenteRepository] --> [PostgreSQL]
+[RetourRepository] --> [PostgreSQL]
 @enduml

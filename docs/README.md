@@ -1,5 +1,7 @@
 # LOG430-labos
-LOG430-labo est une API Rest qui permet de gérer un système de caisse via des requettes HTTP. Vous pouvez consulter [les diagrammes liés à ce projet ](diagrammes.md).
+LOG430-labo est une application qui permet de gérer un système de caisse pour répondre aux besoins d’une entreprise possédant cinq
+magasins répartis dans des différents quartiers, un centre de logistique et une maison mère
+pour les fonctions administratives. Vous pouvez consulter [les diagrammes liés à ce projet ](diagrammes.md).
 
 # Besoins fonctionnels
 
@@ -43,48 +45,6 @@ Il suffit de lancer la commande "docker-compose up --build" pour reconstruire l'
 Si vous lancer l'application via une VM linux, que ça soit avec les commandes mvn ou docker, une étape de plus est nécessaire avant d'ouvrir votre navigateur: 
 
 * Sur windows, ouvrir un CMD et lancer la commande "ssh -L 8080:localhost:8080 log430@10.194.32.178". Ensuite, une saisie du mot de passe est necessaire. Une fois la connexion est réussie, un tunnel est établi avec la VM et vous pouvez ouvrir votre navigateur et accéder à http://localhost:8080
-
-# Effectuer les appels API
-Suite à la commande "docker-compose up --build" il suffit d'ouvrir une nouvelle console et de lancer ces commandes.
-
-## Chercher produit par id
-- curl -X GET http://localhost:8080/produits/1
-
-## Chercher produit par nom
-- curl -X GET http://localhost:8080/produits/nom?nom=Chaise
-
-## Chercher produit par catégorie
-- curl -X GET http://localhost:8080/produits/categorie?categorie=Mobilier
- 
-- curl -X GET http://localhost:8080/produits/categorie?categorie=Électronique
-
-## Consulter stock
-
-- curl -X GET http://localhost:8080/produits/
-
-## Créer une vente
- curl -X POST http://localhost:8080/ventes   -H "Content-Type: application/json"   -d '{
-    "utilisateur": { "id": 2 },
-    "dateVente": "2025-05-23",
-    "lignesVente": [
-      {
-        "produit": { "id": 1 },
-        "quantite": 2
-      },
-      {
-        "produit": { "id": 2 },
-        "quantite": 3
-      }
-    ]
-  }'
-## Annuler une vente (faire un retour)
-curl -X POST http://localhost:8080/retours \
-  -H "Content-Type: application/json" \
-  -d '{
-    "vente": { "id": 1 },
-    "dateRetour": "2025-05-23",
-    "motif": "Produit défectueux"
-  }'
 
 # Workflow ci-java
 Un workflow a été mis en place afin d'automatiser les étapes de vérification du code. Le workflow est composé de trois jobs, "Lint", "Build and test" et "Build and push Docker image".
