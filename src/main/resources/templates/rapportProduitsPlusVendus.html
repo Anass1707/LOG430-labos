@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Produits les plus vendus</title>
+</head>
+<body>
+    <h1>Produits les plus vendus</h1>
+    <table border="1">
+        <tr>
+            <th>Nom du produit</th>
+            <th>Quantité vendue</th>
+        </tr>
+        <tr th:each="entry : ${produitsPlusVendus}">
+            <td th:text="${entry.key.nom}"></td>
+            <td th:text="${entry.value}"></td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,64 +1,53 @@
 package log430.Labos.Entities;
-import jakarta.persistence.*;
 
-import java.util.HashMap;
+import jakarta.persistence.*;
 import java.util.List;
-import java.util.Map;
 
 @Entity
-@Table(name = "utilisateurs")
-public class Utilisateur {
-
+@Table(name = "magasins")
+public class Magasin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nom;
-    private String email;
+    private String adresse;
 
-    @OneToMany(mappedBy = "utilisateur")
+    @OneToMany(mappedBy = "magasin")
     private List<Vente> ventes;
 
-    @OneToMany(mappedBy = "utilisateur")
-    private List<Retour> retours;
+    @OneToMany(mappedBy = "magasin")
+    private List<StockMagasin> stocks;
 
-    // Getters et Setters
+    // getters/setters
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getNom() {
         return nom;
     }
-
     public void setNom(String nom) {
         this.nom = nom;
     }
-
-    public String getEmail() {
-        return email;
+    public String getAdresse() {
+        return adresse;
     }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
     }
     public List<Vente> getVentes() {
         return ventes;
     }
-
     public void setVentes(List<Vente> ventes) {
         this.ventes = ventes;
     }
-    public List<Retour> getRetours() {
-        return retours;
+    public List<StockMagasin> getStocks() {
+        return stocks;
     }
-
-    public void setRetours(List<Retour> retours) {
-        this.retours = retours;
+    public void setStocks(List<StockMagasin> stocks) {
+        this.stocks = stocks;
     }
-    
 }

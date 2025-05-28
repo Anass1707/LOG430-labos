@@ -6,9 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 @Entity
 @Table(name = "ventes")
 public class Vente {
@@ -24,8 +21,12 @@ public class Vente {
     private String dateVente;
     private float total;
 
-    @OneToMany(mappedBy = "vente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "vente", fetch = FetchType.EAGER , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LigneVente> lignesVente  = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "id_magasin")
+    private Magasin magasin;
 
     // Getters et Setters
     public Long getId() {
@@ -60,7 +61,6 @@ public class Vente {
         return lignesVente;
     }
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public void setLignesVente(List<LigneVente> lignesVente) {
         this.lignesVente = lignesVente;
     }

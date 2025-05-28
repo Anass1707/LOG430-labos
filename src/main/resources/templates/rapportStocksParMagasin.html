@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Stocks restants par magasin</title>
+</head>
+<body>
+    <h1>Stocks restants par magasin</h1>
+    <div th:each="entry : ${stocksParMagasin}">
+        <h2 th:text="${entry.key.nom}">Nom du magasin</h2>
+        <table border="1">
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+            </tr>
+            <tr th:each="stock : ${entry.value}">
+                <td th:text="${stock.produit.nom}"></td>
+                <td th:text="${stock.quantite}"></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

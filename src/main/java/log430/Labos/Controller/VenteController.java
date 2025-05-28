@@ -3,7 +3,9 @@ import java.util.List;
 import log430.Labos.Entities.Vente;
 import log430.Labos.Services.VenteService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 @Controller
 @RequestMapping("/ventes")
 public class VenteController {
@@ -19,10 +21,14 @@ public class VenteController {
         return venteService.createVente(vente);
     }
 
+    @GetMapping("/{id}")
     public Vente getVente(Long id) {
         return venteService.getVente(id);
     }
+
+    @GetMapping("/")
     public List<Vente> getAllVentes() {
         return venteService.getAllVentes();
     }
+
 }
