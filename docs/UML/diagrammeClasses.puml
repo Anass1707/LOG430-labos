@@ -5,6 +5,7 @@ class Utilisateur {
   - nom: string
   - email: string
 }
+
 class Produit {
   - id: int
   - nom: string
@@ -13,31 +14,65 @@ class Produit {
   - quantite: int
 }
 
-class LigneVente {
-  - idProduit: int
-  - idVente: int
-  - quantite: int
+class Magasin {
+  - id: int
+  - nom: string
+  - adresse: string
 }
 
 class Vente {
   - id: int
-  - idUtilisateur: int
-  - date: Date
-  - produits: List<LigneVente>
+  - dateVente: Date
   - total: float
+  - id_utilisateur: int
+  - id_magasin: int
+}
+
+class LigneVente {
+  - idVente: int
+  - idProduit: int
+  - quantite: int
 }
 
 class Retour {
   - id: int
-  - idVente: int
   - dateRetour: Date
   - motif: string
+  - id_vente: int
 }
 
-Produit "1" --> "1" LigneVente : référencé dans >
-Vente "1" *-- "*" LigneVente : contient >
-Retour "1" --> "1" Vente : annule >
+class StockMagasin {
+  - id: int
+  - id_magasin: int
+  - id_produit: int
+  - quantite: int
+}
+
+class StockCentral {
+  - id: int
+  - id_produit: int
+  - quantite: int
+}
+
+class DemandeReapprovisionnement {
+  - id: int
+  - id_magasin: int
+  - id_produit: int
+  - quantiteDemandee: int
+  - dateDemande: Date
+  - statut: string
+}
+
 Utilisateur "1" --> "*" Vente : effectue >
 Utilisateur "1" --> "*" Retour : effectue >
-Utilisateur "1" --> "*" Produit : consulte >
+Utilisateur "1" --> "*" DemandeReapprovisionnement : effectue >
+Vente "1" *-- "*" LigneVente : contient >
+LigneVente "*" --> "1" Produit : concerne >
+Vente "*" --> "1" Magasin : liées à >
+Retour "*" --> "1" Vente : annule >
+Magasin "1" *-- "*" StockMagasin : possède >
+StockMagasin "*" --> "1" Produit : concerne >
+StockCentral "*" --> "1" Produit : concerne >
+DemandeReapprovisionnement "*" --> "1" Magasin : concerne >
+DemandeReapprovisionnement "*" --> "1" Produit : concerne >
 @enduml

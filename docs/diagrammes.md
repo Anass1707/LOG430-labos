@@ -8,7 +8,7 @@
 ![c](../img/diagrammeComposants.png)
 
 ## Diagramme de deploiement
-![d](../img/diagrammeDeploiement-2-tiers.png)
+![d](../img/diagrammeDeploiement-3-tiers.png)
 
 ## Diagrammes de séquences
 

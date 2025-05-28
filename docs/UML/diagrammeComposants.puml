@@ -1,8 +1,11 @@
 @startuml
+actor Utilisateur
+
 package "Présentation" {
   [ProduitController] <<Controller>>
   [VenteController] <<Controller>>
   [RetourController] <<Controller>>
+  [Thymeleaf] <<View>>
 }
 
 package "Logique Métier" {
@@ -17,7 +20,14 @@ package "Persistance" {
   [RetourRepository] <<Repository>>
 }
 
-' Relations entre packages/modules
+Utilisateur --> [ProduitController]
+Utilisateur --> [VenteController]
+Utilisateur --> [RetourController]
+
+[ProduitController] --> [Thymeleaf]
+[VenteController] --> [Thymeleaf]
+[RetourController] --> [Thymeleaf]
+
 [ProduitController] --> [ProduitService]
 [VenteController] --> [VenteService]
 [RetourController] --> [RetourService]
@@ -25,4 +35,5 @@ package "Persistance" {
 [ProduitService] --> [ProduitRepository]
 [VenteService] --> [VenteRepository]
 [RetourService] --> [RetourRepository]
+
 @enduml

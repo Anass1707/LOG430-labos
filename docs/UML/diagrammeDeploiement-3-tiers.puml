@@ -1,0 +1,21 @@
+@startuml
+
+node "Clients Web" {
+  artifact "Navigateurs web"
+}
+node "Serveur App" {
+  component "Contrôleur MVC"
+  component "Service Métier"
+  component "Repository"
+  component "Vue\n(Thymeleaf)"
+}
+
+node "Base de données" {
+  database "PostgreSQL"
+}
+
+"Navigateurs web" --> "Contrôleur MVC"
+"Contrôleur MVC" --> "Service Métier"
+"Service Métier" --> "Repository"
+"Repository" --> "PostgreSQL" : JDBC
+@enduml
