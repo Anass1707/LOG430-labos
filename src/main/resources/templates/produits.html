@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des produits</title>
+</head>
+<body>
+    <h1>Liste des produits</h1>
+        <form th:action="@{/produits/nom}" method="get" style="display:inline;">
+        <input type="text" name="nom" placeholder="Rechercher par nom"/>
+        <button type="submit">Rechercher</button>
+    </form>
+
+    <form th:action="@{/produits/categorie}" method="get" style="display:inline; margin-left:20px;">
+        <input type="text" name="categorie" placeholder="Rechercher par catégorie"/>
+        <button type="submit">Rechercher</button>
+    </form>
+
+    <form th:action="@{/produits}" method="get" style="display:inline; margin-left:20px;">
+        <button type="submit">Retirer les filtres</button>
+    </form>
+    <br/><br/>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th>Catégorie</th>
+            <th>Détail</th>
+        </tr>
+        <tr th:each="produit : ${produits}">
+            <td th:text="${produit.id}"></td>
+            <td th:text="${produit.nom}"></td>
+            <td th:text="${produit.prix}"></td>
+            <td th:text="${produit.quantite}"></td>
+            <td th:text="${produit.categorie}"></td>
+            <td>
+                <a th:href="@{'/produits/' + ${produit.id}}">Voir</a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

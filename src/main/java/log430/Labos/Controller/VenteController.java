@@ -1,10 +1,10 @@
 package log430.Labos.Controller;
-import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import log430.Labos.Entities.Vente;
 import log430.Labos.Services.VenteService;
-
-@RestController
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+@Controller
 @RequestMapping("/ventes")
 public class VenteController {
 
@@ -14,18 +14,14 @@ public class VenteController {
         this.venteService = venteService;
     }
 
-    @PostMapping
-    public Vente createVente(@RequestBody Vente vente) {
+    public Vente createVente(Vente vente) {
         System.out.println("Vente reçue : " + vente.getLignesVente().size());
         return venteService.createVente(vente);
     }
 
-    @GetMapping("/{id}")
-    public Vente getVente(@PathVariable Long id) {
+    public Vente getVente(Long id) {
         return venteService.getVente(id);
     }
-
-    @GetMapping("/")
     public List<Vente> getAllVentes() {
         return venteService.getAllVentes();
     }

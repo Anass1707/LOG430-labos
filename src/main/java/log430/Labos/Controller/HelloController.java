@@ -1,23 +1,18 @@
 package log430.Labos.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import log430.Labos.Repositories.UtilisateurRepository;
 import log430.Labos.Entities.Utilisateur;
 import java.util.List;
+import java.util.Optional;
 
-@RestController
 public class HelloController {
 
     private final UtilisateurRepository utilisateurRepository;
     public HelloController(UtilisateurRepository utilisateurRepository) {
         this.utilisateurRepository = utilisateurRepository;
     }
-    @GetMapping("/")
     public String helloWorld() {
         return "Hello, World!";
     }
-
-    @GetMapping("/users")
     public List<Utilisateur> getAllUtilisateurs() {
         final List<Utilisateur> utilisateurs = utilisateurRepository.findAll();
         if (utilisateurs.isEmpty()) {
@@ -30,5 +25,18 @@ public class HelloController {
         }
         System.out.println(utilisateurRepository.findAll());
         return utilisateurs;
+    }
+
+    public Utilisateur getUtilisateur(int id) {
+        final Optional<Utilisateur> utilisateurOpt = utilisateurRepository.findById((long) id);
+        if (!utilisateurOpt.isPresent()) {
+            System.out.println("Aucun utilisateur trouvé.");
+            return null;
+        } else {
+            final Utilisateur utilisateur = utilisateurOpt.get();
+            System.out.println("Utilisateur trouvé :");
+            System.out.println(utilisateur.getNom() + " - " + utilisateur.getEmail());
+            return utilisateur;
+        }
     }
 }
