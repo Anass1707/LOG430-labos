@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rapports</title>
+</head>
+<body>
+    <h1>Rapports</h1>
+    <ul>
+        <li>
+            <a th:href="@{/rapports/ventes-par-magasin}">Rapport des ventes par magasin</a>
+        </li>
+        <li>
+            <a th:href="@{/rapports/produits-plus-vendus}">Rapport des produits les plus vendus</a>
+        </li>
+        <li>
+            <a th:href="@{/rapports/stocks-par-magasin}">Rapport des stocks restants par magasin</a>
+        </li>
+        <li>
+            <a th:href="@{/rapports/rapportDetaille}">Rapport detaillé</a>
+        </li>
+    </ul>
+    <br>
+    <form th:action="@{/}" method="get">
+        <button type="submit">Retour</button>
+    </form>
+</body>
+</html>

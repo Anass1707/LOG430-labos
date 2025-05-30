@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Stock du magasin</title>
+</head>
+<body>
+    <h1 th:text="'Stock du magasin : ' + ${magasin.nom}"></h1>
+    <div th:if="${message}">
+        <p th:text="${message}" style="color:red;"></p>
+    </div>
+    <table th:if="${stocks}" border="1">
+        <tr>
+            <th>Produit</th>
+            <th>Quantité</th>
+        </tr>
+        <tr th:each="stock : ${stocks}">
+            <td th:text="${stock.produit.nom}"></td>
+            <td th:text="${stock.quantite}"></td>
+        </tr>
+    </table>
+    <br>
+    <form th:action="@{/}" method="get">
+        <button type="submit">Retour</button>
+    </form>
+</body>
+</html>

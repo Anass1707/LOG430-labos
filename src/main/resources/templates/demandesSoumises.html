@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Demandes de réapprovisionnement</title>
+</head>
+<body>
+    <h1>Demandes de réapprovisionnement du magasin</h1>
+    <div th:if="${magasin}">
+        <h2 th:text="'Magasin : ' + ${magasin.nom}"></h2>
+    </div>
+    <table border="1">
+        <tr>
+            <th>Produit</th>
+            <th>Quantité demandée</th>
+            <th>Date de demande</th>
+            <th>Statut</th>
+        </tr>
+        <tr th:each="demande : ${demandes}">
+            <td th:text="${demande.produit.nom}"></td>
+            <td th:text="${demande.quantiteDemandee}"></td>
+            <td th:text="${#dates.format(demande.dateDemande, 'dd/MM/yyyy')}"></td>
+            <td th:text="${demande.statut}"></td>
+        </tr>
+    </table>
+    <br>
+    <a th:href="@{/stockCentral(magasinId=${magasin.id})}">Retour au stock central</a>
+</body>
+</html>

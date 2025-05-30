@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rapport détaillé</title>
+    <style>
+        .section { margin-bottom: 2em; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 0.5em; }
+        th { background: #f0f0f0; }
+        h2 { color: #1976d2; }
+    </style>
+</head>
+<body>
+    <h1>Rapport détaillé</h1>
+
+    <div class="section">
+        <h2>Ventes par magasin</h2>
+        <div th:each="entry : ${ventesParMagasin}">
+            <h3 th:text="${entry.key.nom}"></h3>
+            <table>
+                <tr>
+                    <th>ID Vente</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                </tr>
+                <tr th:each="vente : ${entry.value}">
+                    <td th:text="${vente.id}"></td>
+                    <td th:text="${vente.dateVente}"></td>
+                    <td th:text="${vente.total}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Produits les plus vendus</h2>
+        <table>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité vendue</th>
+            </tr>
+            <tr th:each="entry : ${produitsPlusVendus}">
+                <td th:text="${entry.key.nom}"></td>
+                <td th:text="${entry.value}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Stocks restants par magasin</h2>
+        <div th:each="entry : ${stocksParMagasin}">
+            <h3 th:text="${entry.key.nom}"></h3>
+            <table>
+                <tr>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                </tr>
+                <tr th:each="stock : ${entry.value}">
+                    <td th:text="${stock.produit.nom}"></td>
+                    <td th:text="${stock.quantite}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <form th:action="@{/rapports}" method="get">
+        <button type="submit">Retour aux rapports</button>
+    </form>
+</body>
+</html>

@@ -117,13 +117,19 @@ INSERT INTO stock_magasin (id_magasin, id_produit, quantite) VALUES
 INSERT INTO ventes (id_utilisateur, date_vente, total, id_magasin) VALUES
 (1, '2024-05-01', 91.80, 1),
 (2, '2024-05-02', 120.50, 2),
-(1, '2024-05-03', 25.00, 3);
+(1, '2024-05-03', 25.00, 3),
+(1, '2024-05-01', 367.2, 1),
+(2, '2024-05-02', 1205.00, 2),
+(1, '2024-05-03', 50.00, 3);
 
 -- LigneVente
 INSERT INTO ligne_vente (id_vente, id_produit, quantite) VALUES
 (1, 1, 2),   -- 2 claviers
 (2, 3, 1),   -- 1 chaise
-(3, 2, 1);   -- 1 souris
+(3, 2, 1),   -- 1 souris
+(4, 1, 8),   
+(5, 3, 10),   
+(6, 2, 6);   
 
 -- Retours
 INSERT INTO retours (id_vente, date_retour, motif) VALUES

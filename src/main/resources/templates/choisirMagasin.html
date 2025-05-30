@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Choisir un magasin</title>
+</head>
+<body>
+    <h1>Choisir un magasin</h1>
+    <div th:if="${message}">
+        <p th:text="${message}" style="color:red;"></p>
+    </div>
+    <form id="magasinForm" method="get">
+        <label for="magasin">Magasin :</label>
+        <select id="magasin" name="magasinId" required>
+            <option th:each="magasin : ${magasins}" th:value="${magasin.id}" th:text="${magasin.nom}"></option>
+        </select>
+        <br><br>
+        <button type="button" onclick="submitForm('/rapports/stock-magasin')">Voir le stock du magasin</button>
+        <button type="button" onclick="submitForm('/stockCentral')">Voir le stock central</button>
+    </form>
+    <br>
+    <form th:action="@{/rapports}" method="get" style="display:inline;">
+        <button type="submit">Maison mère</button>
+    </form>
+</body>
+</html>
+<script>
+    function submitForm(action) {
+        const form = document.getElementById('magasinForm');
+        form.action = action;
+        form.submit();
+    }
+</script>

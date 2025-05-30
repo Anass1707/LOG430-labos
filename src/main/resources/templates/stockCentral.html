@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Stock central</title>
+</head>
+<body>
+    <h1>Stock central</h1>
+    <div th:if="${message}">
+        <p th:text="${message}" style="color:green;"></p>
+    </div>
+    <h2 th:if="${magasin}" th:text="'Stock du magasin : ' + ${magasin.nom}"></h2>
+    <table border="1">
+        <tr>
+            <th>Produit</th>
+            <th>Stock central</th>
+            <th>Stock magasin</th>
+            <th>Demander un réapprovisionnement</th>
+        </tr>
+        <tr th:each="stockCentral : ${stockCentral}">
+            <td th:text="${stockCentral.produit.nom}"></td>
+            <td th:text="${stockCentral.quantite}"></td>
+            <td th:text="${stockMagasinMap[stockCentral.produit.id] != null ? stockMagasinMap[stockCentral.produit.id] : 0}"></td>
+            <td>
+                <form th:action="@{/stockCentral/demande}" method="post" style="display:inline;">
+                    <input type="hidden" name="produitId" th:value="${stockCentral.produit.id}" />
+                    <input type="hidden" name="magasinId" th:value="${magasin.id}" />
+                    <input type="number" name="quantite" min="1" placeholder="Quantité" required />
+                    <button type="submit">Demander</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <form th:action="@{/demandesSoumises}" method="get" style="display:inline;">
+        <input type="hidden" name="magasinId" th:value="${magasin.id}" />
+        <button type="submit">Voir les demandes du magasin</button>
+    </form>
+</body>
+</html>

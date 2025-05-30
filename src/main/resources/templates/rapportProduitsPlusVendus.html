@@ -15,5 +15,9 @@
             <td th:text="${entry.value}"></td>
         </tr>
     </table>
+    <br>
+    <form th:action="@{/rapports}" method="get">
+        <button type="submit">Retour aux rapports</button>
+    </form>
 </body>
 </html>
