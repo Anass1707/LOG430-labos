@@ -17,6 +17,7 @@ public class StockMagasin {
     @JoinColumn(name = "id_produit")
     private Produit produit;
 
+    private int minimum_stock;
     private int quantite;
 
     public Long getId() {
@@ -42,5 +43,11 @@ public class StockMagasin {
     }
     public void setQuantite(int quantite) {
         this.quantite = quantite;
+    }
+    public int getMinimumStock() {
+        return minimum_stock;
+    }
+    public void setMinimumStock(int minimum_stock) {
+        this.minimum_stock = minimum_stock;
     }
 }

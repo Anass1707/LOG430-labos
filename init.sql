@@ -66,6 +66,7 @@ CREATE TABLE IF NOT EXISTS stock_magasin (
   id_magasin INT NOT NULL,
   id_produit INT NOT NULL,
   quantite INT NOT NULL,
+  minimum_stock INT NOT NULL,
   FOREIGN KEY (id_magasin) REFERENCES magasins(id),
   FOREIGN KEY (id_produit) REFERENCES produits(id),
   UNIQUE (id_magasin, id_produit)
@@ -105,22 +106,25 @@ INSERT INTO stock_central (id_produit, quantite) VALUES
 (3, 50);
 
 -- Stock magasin
-INSERT INTO stock_magasin (id_magasin, id_produit, quantite) VALUES
-(1, 1, 20),
-(1, 2, 30),
-(2, 1, 10),
-(2, 3, 5),
-(3, 2, 15),
-(3, 3, 8);
+INSERT INTO stock_magasin (id_magasin, id_produit, quantite, minimum_stock) VALUES
+(1, 1, 20, 10),
+(1, 2, 30, 15),
+(1, 3, 0, 10),
+(2, 1, 10,10),
+(2, 2, 0,20),
+(2, 3, 5, 5),
+(3, 1, 0, 10),
+(3, 2, 15, 10),
+(3, 3, 8,5);
 
 -- Ventes
 INSERT INTO ventes (id_utilisateur, date_vente, total, id_magasin) VALUES
-(1, '2024-05-01', 91.80, 1),
-(2, '2024-05-02', 120.50, 2),
-(1, '2024-05-03', 25.00, 3),
-(1, '2024-05-01', 367.2, 1),
-(2, '2024-05-02', 1205.00, 2),
-(1, '2024-05-03', 50.00, 3);
+(1, '2025-06-01', 91.80, 1),
+(2, '2025-06-02', 120.50, 2),
+(1, '2025-06-03', 25.00, 3),
+(1, '2025-06-01', 367.2, 1),
+(2, '2025-06-02', 1205.00, 2),
+(1, '2025-06-05', 50.00, 3);
 
 -- LigneVente
 INSERT INTO ligne_vente (id_vente, id_produit, quantite) VALUES

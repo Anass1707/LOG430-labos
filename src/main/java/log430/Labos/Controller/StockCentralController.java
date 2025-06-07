@@ -39,9 +39,9 @@ public class StockCentralController {
             final List<StockMagasin> stockMagasinList = magasinService.getMagasin(magasinId).getStocks();
             model.addAttribute("stockMagasin", stockMagasinList);
 
-            final Map<Long, Integer> stockMagasinMap = new HashMap<>();
+            final Map<Long, StockMagasin> stockMagasinMap = new HashMap<>();
             for (StockMagasin s : stockMagasinList) {
-                stockMagasinMap.put(s.getProduit().getId(), s.getQuantite());
+               stockMagasinMap.put(s.getProduit().getId(), s);
             }
             model.addAttribute("stockMagasinMap", stockMagasinMap);
         }

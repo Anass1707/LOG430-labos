@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tableau de bord des magasins</title>
+</head>
+<body>
+    <h1>Tableau de bord des magasins</h1>
+    <table border="1">
+        <tr>
+            <th>Magasin</th>
+            <th>Chiffre d'affaires</th>
+            <th>Alertes rupture de stock</th>
+            <th>Produits en surstock</th>
+            <th>Tendance hebdo (ventes)</th>
+        </tr>
+        <tr th:each="indicateurs : ${magasins}">
+            <td th:text="${indicateurs.magasin.nom}"></td>
+            <td th:text="${#numbers.formatDecimal(indicateurs.chiffreAffaires, 1, 'POINT', 2, 'POINT')} + ' $'"></td>
+            <td>
+                <ul>
+                    <li th:each="stock : ${indicateurs.ruptures}" th:text="${stock.produit.nom}"></li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li th:each="stock : ${indicateurs.surstocks}" th:text="${stock.produit.nom} + ' (' + stock.quantite + ')'"></li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li th:each="tendance : ${indicateurs.tendances}"
+                        th:text="${tendance.jour} + ' : ' + ${tendance.ventes}"></li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

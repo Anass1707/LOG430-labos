@@ -19,13 +19,15 @@
         <tr th:each="stockCentral : ${stockCentral}">
             <td th:text="${stockCentral.produit.nom}"></td>
             <td th:text="${stockCentral.quantite}"></td>
-            <td th:text="${stockMagasinMap[stockCentral.produit.id] != null ? stockMagasinMap[stockCentral.produit.id] : 0}"></td>
+            <td th:text="${stockMagasinMap[stockCentral.produit.id] != null ? stockMagasinMap[stockCentral.produit.id].quantite : 0}"></td>
             <td>
                 <form th:action="@{/stockCentral/demande}" method="post" style="display:inline;">
                     <input type="hidden" name="produitId" th:value="${stockCentral.produit.id}" />
                     <input type="hidden" name="magasinId" th:value="${magasin.id}" />
                     <input type="number" name="quantite" min="1" placeholder="Quantité" required />
-                    <button type="submit">Demander</button>
+                    <th:block th:if="${stockMagasinMap[stockCentral.produit.id] != null and stockMagasinMap[stockCentral.produit.id].minimumStock > stockMagasinMap[stockCentral.produit.id].quantite}">
+                        <button type="submit">Demander</button>
+                    </th:block>
                 </form>
             </td>
         </tr>

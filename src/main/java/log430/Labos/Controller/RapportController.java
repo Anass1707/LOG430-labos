@@ -81,4 +81,10 @@ public class RapportController {
         }
         return "stockMagasinParId";
     }
+
+    @GetMapping("/dashboard")
+    public String dashboard(Model model) {
+        model.addAttribute("magasins", magasinService.getDashboard());
+        return "dashboard";
+    }
 }

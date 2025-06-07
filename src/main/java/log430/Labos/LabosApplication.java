@@ -1,12 +1,6 @@
 package log430.Labos;
-
-import log430.Labos.Controller.ProduitController;
-import log430.Labos.Controller.RetourController;
-import log430.Labos.Controller.VenteController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import java.util.Scanner;
 
 @SpringBootApplication
 public class LabosApplication {

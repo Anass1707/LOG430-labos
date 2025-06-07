@@ -1,10 +1,7 @@
 package log430.Labos.Entities;
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Table(name = "ventes")
