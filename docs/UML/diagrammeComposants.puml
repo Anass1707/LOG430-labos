@@ -1,39 +1,55 @@
 @startuml
 
 package "Présentation" {
-  [ProduitController] <<Controller>>
   [VenteController] <<Controller>>
-  [RetourController] <<Controller>>
+  [RapportController] <<Controller>>
+  [StockCentralController] <<Controller>>
   [Thymeleaf] <<View>>
 }
 
 package "Logique Métier" {
-  [ProduitService] <<Service>>
+  [MagasinService] <<Service>>
+  [StockCentralService] <<Service>>
   [VenteService] <<Service>>
-  [RetourService] <<Service>>
 }
 
 package "Persistance" {
-  [ProduitRepository] <<Repository>>
+  [MagasinRepository] <<Repository>>
   [VenteRepository] <<Repository>>
-  [RetourRepository] <<Repository>>
+  [StockCentralRepository] <<Repository>>
+  [DemandeReapprovisionnementRepository] <<Repository>>
+  [ProduitRepository] <<Repository>>
+  [StockMagasinRepository] <<Repository>>
 }
 package "Base de données" {
   [PostgreSQL] <<Database>>
 }
-[ProduitController] -up-> [Thymeleaf]
 [VenteController] -up-> [Thymeleaf]
-[RetourController] -up-> [Thymeleaf]
+[RapportController] -up-> [Thymeleaf]
+[StockCentralController] -up-> [Thymeleaf]
 
-[ProduitController] --> [ProduitService]
 [VenteController] --> [VenteService]
-[RetourController] --> [RetourService]
+[RapportController] --> [MagasinService]
+[StockCentralController] --> [MagasinService]
+[RapportController] --> [VenteService]
+[StockCentralController] --> [StockCentralService]
 
-[ProduitService] --> [ProduitRepository]
+
+[MagasinService] --> [MagasinRepository]
+[MagasinService] --> [DemandeReapprovisionnementRepository]
+[StockCentralService] --> [StockCentralRepository]
+[StockCentralService] --> [DemandeReapprovisionnementRepository]
+[StockCentralService] --> [ProduitRepository]
+[StockCentralService] --> [MagasinRepository]
 [VenteService] --> [VenteRepository]
-[RetourService] --> [RetourRepository]
+[VenteService] --> [MagasinRepository]
+[VenteService] --> [ProduitRepository]
+[VenteService] --> [StockMagasinRepository]
 
-[ProduitRepository] --> [PostgreSQL]
+[MagasinRepository] --> [PostgreSQL]
 [VenteRepository] --> [PostgreSQL]
-[RetourRepository] --> [PostgreSQL]
+[StockCentralRepository] --> [PostgreSQL]
+[DemandeReapprovisionnementRepository] --> [PostgreSQL]
+[ProduitRepository] --> [PostgreSQL]
+[StockMagasinRepository] --> [PostgreSQL]
 @enduml

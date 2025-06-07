@@ -1,77 +1,85 @@
 @startuml DiagrammeClasses
 
-class Utilisateur {
+package "Domaine Utilisateur" {
+  class Utilisateur {
   - id: int
   - nom: string
   - email: string
+  }
 }
 
-class Produit {
-  - id: int
-  - nom: string
-  - categorie: string
-  - prix: float
-  - quantite: int
+package "Domaine Produit" {
+  class Produit {
+    - id: int
+    - nom: string
+    - categorie: string
+    - prix: float
+    - quantite: int
+  }
+}
+package "Domaine Magasin" {
+  class Magasin {
+    - id: int
+    - nom: string
+    - adresse: string
+  }
+
+  class StockMagasin {
+    - id: int
+    - id_magasin: int
+    - id_produit: int
+    - quantite: int
+  }
 }
 
-class Magasin {
-  - id: int
-  - nom: string
-  - adresse: string
+package "Domaine Vente" {
+  class Vente {
+    - id: int
+    - dateVente: Date
+    - total: float
+    - id_utilisateur: int
+    - id_magasin: int
+  }
+
+  class LigneVente {
+    - idVente: int
+    - idProduit: int
+    - quantite: int
+  }
+  class Retour {
+    - id: int
+    - dateRetour: Date
+    - motif: string
+    - id_vente: int
+  }
 }
 
-class Vente {
-  - id: int
-  - dateVente: Date
-  - total: float
-  - id_utilisateur: int
-  - id_magasin: int
+package "Domaine Logistique" {
+  class StockCentral {
+    - id: int
+    - id_produit: int
+    - quantite: int
+  }
+
+  class DemandeReapprovisionnement {
+    - id: int
+    - id_magasin: int
+    - id_produit: int
+    - quantiteDemandee: int
+    - dateDemande: Date
+    - statut: string
+  }
 }
 
-class LigneVente {
-  - idVente: int
-  - idProduit: int
-  - quantite: int
-}
-
-class Retour {
-  - id: int
-  - dateRetour: Date
-  - motif: string
-  - id_vente: int
-}
-
-class StockMagasin {
-  - id: int
-  - id_magasin: int
-  - id_produit: int
-  - quantite: int
-}
-
-class StockCentral {
-  - id: int
-  - id_produit: int
-  - quantite: int
-}
-
-class DemandeReapprovisionnement {
-  - id: int
-  - id_magasin: int
-  - id_produit: int
-  - quantiteDemandee: int
-  - dateDemande: Date
-  - statut: string
-}
-
-Utilisateur "1" --> "*" Vente : effectue >
-Utilisateur "1" --> "*" Retour : effectue >
+Utilisateur "1" -right-> "*" Vente : effectue >
+Utilisateur "1" -right-> "*" Retour : effectue >
 Utilisateur "1" --> "*" DemandeReapprovisionnement : effectue >
 Vente "1" *-- "*" LigneVente : contient >
 LigneVente "*" --> "1" Produit : concerne >
 Vente "*" --> "1" Magasin : liées à >
 Retour "*" --> "1" Vente : annule >
 Magasin "1" *-- "*" StockMagasin : possède >
-StockMagasin "*" --> "1" Produit : concerne >
+StockMagasin "*" -right-> "1" Produit : concerne >
 StockCentral "*" --> "1" Produit : concerne >
 DemandeReapprovisionnement "*" --> "1" Magasin : concerne >
 DemandeReapprovisionnement "*" --> "1" Produit : concerne >
