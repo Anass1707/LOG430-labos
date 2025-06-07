@@ -1,0 +1,22 @@
+@startuml
+actor Utilisateur
+participant "StockCentralController" as Controller
+participant "StockCentralService"
+participant "MagasinService"
+
+    Utilisateur -> Controller : afficherStockCentral(magasinId, model)
+
+    Controller -> StockCentralService : getStockCentral()
+
+    Controller -> MagasinService : getAllMagasins()
+
+    Controller -> MagasinService : getMagasin(magasinId)
+    Controller -> Magasin : getStocks()
+
+    loop for each StockMagasin
+        Controller -> StockMagasin : getProduit()
+        Controller -> Produit : getId()
+        Controller -> stockMagasinMap : put(id, stockMagasin)
+    end
+    Controller --> Utilisateur : afficherStockCentralView(stockMagasinMap, magasins)
+@enduml

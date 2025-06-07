@@ -1,21 +1,31 @@
 @startuml
-actor Utilisateur as u
+
+left to right direction
+
+actor employe_magasin as e
+actor gestionnaire_maison_mere  as g
+actor reponsable_logistique as r
 
 rectangle "Application de caisse" {
-  usecase "Rechercher un produit par ID" as UC1
-  usecase "Rechercher un produit par nom" as UC2
-  usecase "Rechercher un produit par  catégorie" as UC3
-  usecase "Créer une vente (produit selection de produits)" as UC4
-  usecase "Enregistrer une vente" as UC5
-  usecase "Annuler une vente" as UC6
-  usecase "Consulter le stock" as UC7
+  usecase "Générer un rapport consolidé des ventes" as UC1 #LightGreen
+  usecase "Consulter le stock central" as UC2a #LightGreen
+  usecase "Déclencher un réapprovisionnement" as UC2b #LightGreen
+  usecase "Visualiser les performances des magasins dans un tableau de bord" as UC3 #LightGreen
+  usecase "Mettre à jour les produits depuis la maison mère" as UC4 #Orange
+  usecase "Approvisionner un magasin depuis le centre logistique" as UC6 #Orange
 }
 
-u --> UC1
-u --> UC2
-u --> UC3
-u --> UC4
-u --> UC5
-u --> UC6
-u --> UC7
+g --> UC1
+e --> UC2a
+e --> UC2b
+g --> UC3
+r --> UC4
+r --> UC6
+
+legend right
+  <b>Couleurs des cas d'utilisation :</b>
+  <back:LightGreen>Implémenté</back>
+  <back:Orange>Non implémenté</back>
+endlegend
+
 @enduml

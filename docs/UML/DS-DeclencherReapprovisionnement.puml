@@ -1,0 +1,52 @@
+@startuml
+
+actor Utilisateur
+participant "StockCentralController" as Controller
+participant "StockCentralService" as Service
+participant "ProduitRepository" as ProdRepo
+participant "StockCentralRepository" as StockRepo
+participant "DemandeRepository" as DemandeRepo
+participant "StockCentral"
+participant "Magasin"
+participant "Produit"
+participant "DemandeReapprovisionnement"
+
+Utilisateur -> Controller : POST /stockCentral/demande\n(magasinId, produitId, quantite)
+activate Controller
+Controller -> Service : creerDemande(magasinId, produitId, quantite)
+activate Service
+
+Service -> StockRepo : findByProduitId(produitId)
+activate StockRepo
+StockRepo --> Service : StockCentral
+deactivate StockRepo
+
+
+    Service -> ProdRepo : findById(produitId)
+    activate ProdRepo
+    ProdRepo --> Service : Optional<Produit>
+    deactivate ProdRepo
+
+    Service -> DemandeReapprovisionnement : new
+    Service -> DemandeReapprovisionnement : setMagasin(magasin)
+    Service -> DemandeReapprovisionnement : setProduit(produit)
+    Service -> DemandeReapprovisionnement : setQuantiteDemandee(quantite)
+    Service -> DemandeReapprovisionnement : setDateDemande(new Date())
+    Service -> DemandeReapprovisionnement : setStatut("EN_ATTENTE")
+
+    Service -> DemandeRepo : save(demande)
+    activate DemandeRepo
+    DemandeRepo --> Service
+    deactivate DemandeRepo
+
+    Service -> StockCentral : setQuantite(qté - qtéDemandée)
+    Service -> StockRepo : save(stockCentral)
+    activate StockRepo
+    StockRepo --> Service
+    deactivate StockRepo
+
+
+deactivate Service
+Controller --> Utilisateur : Redirect vers /stockCentral?magasinId=...
+deactivate Controller
+@enduml
