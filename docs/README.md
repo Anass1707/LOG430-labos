@@ -5,15 +5,12 @@ pour les fonctions administratives. Vous pouvez consulter [les diagrammes liés 
 
 # Besoins fonctionnels
 
-## Gestion des produits
-1. Rechercher un produit par identifiant, nom ou catégorie.
-2. Afficher les détails d’un produit .
-3. Consulter le stock.
-
-## Gestion des ventes
-1. Enregistrer une vente.
-2. Créer une vente (produit selection de produits).
-3. Annuler une vente
+- Générer un rapport des ventes
+- Consulter le stock central
+- Déclencher un réapprovisionnement
+- Visualiser les performances des magasins dans un tableau de bord
+- Mettre à jour les produits depuis la maison mère
+- Approvisionner un magasin depuis le centre logistique
 
 # Besoins non-fonctionnels
 
@@ -33,9 +30,11 @@ Pour pouvoir exécuter cette application localement il y a des prérequis néces
 4. Cloner le projet et se placer à ce niveau "~/projects/LOG430-labos"
 
 ## Lancer l'application
-1. "mvn clean install": pour compiler le projet et regénerer le dossier traget.
-2. "mvn spring-boot:run": pour lancer localement l'application.
-3. Ouvrir votre navigateur web avec http://localhost:8080
+1. Valider que le serveur Psql est active avec la commande "sudo systemctl status postgresql"
+2. Si le serveur n'est pas lancer, vous devez exécuter la commande suivante "sudo systemctl start postgresql"
+3. "mvn clean install": pour compiler le projet et regénerer le dossier traget.
+4. "mvn spring-boot:run": pour lancer localement l'application.
+5. Ouvrir votre navigateur web avec http://localhost:8080
 
 
 ## Construire et lancer le conteneur à l’aide de Docker-Compose

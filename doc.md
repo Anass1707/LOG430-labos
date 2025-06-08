@@ -55,7 +55,7 @@ Ce projet est une application web de gestion logistique pour une chaîne de maga
 
 # 5. Scénarios d’utilisation
 
-- Générer un rapport consolidé des ventes
+- Générer un rapport des ventes
 - Consulter le stock central 
 - Déclencher un réapprovisionnement
 - Visualiser les performances des magasins dans un tableau de bord
