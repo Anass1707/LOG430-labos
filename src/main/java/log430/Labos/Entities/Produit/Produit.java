@@ -1,5 +1,9 @@
-package log430.Labos.Entities;
+package log430.Labos.Entities.Produit;
 import jakarta.persistence.*;
+import log430.Labos.Entities.Logistique.StockCentral;
+import log430.Labos.Entities.Magasin.StockMagasin;
+import log430.Labos.Entities.Vente.LigneVente;
+
 import java.util.List;
 
 @Entity

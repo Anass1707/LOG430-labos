@@ -1,5 +1,6 @@
-package log430.Labos.Entities;
+package log430.Labos.Entities.Vente;
 import jakarta.persistence.*;
+import log430.Labos.Entities.Utilisateur.Utilisateur;
 
 @Entity
 @Table(name = "retours")

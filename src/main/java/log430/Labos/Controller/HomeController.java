@@ -1,16 +1,15 @@
 package log430.Labos.Controller;
 import log430.Labos.Repositories.UtilisateurRepository;
-import log430.Labos.Services.MagasinService;
-import log430.Labos.Entities.DemandeReapprovisionnement;
-import log430.Labos.Entities.Magasin;
-import log430.Labos.Entities.Utilisateur;
+import log430.Labos.Services.Magasin.MagasinService;
+import log430.Labos.Entities.Magasin.Magasin;
+import log430.Labos.Entities.Utilisateur.Utilisateur;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomeController {
@@ -67,14 +66,5 @@ public class HomeController {
             model.addAttribute("magasins", magasins);
         }
         return "choisirMagasin";
-    }
-
-    @GetMapping("/demandesSoumises")
-    public String afficherDemandes(@RequestParam Long magasinId, Model model) {
-        final Magasin magasin = magasinService.getMagasin(magasinId);
-        final List<DemandeReapprovisionnement> demandes = magasinService.getDemandesByMagasin(magasinId);
-        model.addAttribute("magasin", magasin);
-        model.addAttribute("demandes", demandes);
-        return "demandesSoumises";
     }
 }

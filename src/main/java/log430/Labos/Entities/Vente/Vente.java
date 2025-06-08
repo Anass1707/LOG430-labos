@@ -1,5 +1,8 @@
-package log430.Labos.Entities;
+package log430.Labos.Entities.Vente;
 import jakarta.persistence.*;
+import log430.Labos.Entities.Magasin.Magasin;
+import log430.Labos.Entities.Utilisateur.Utilisateur;
+
 import java.util.ArrayList;
 import java.util.List;
 

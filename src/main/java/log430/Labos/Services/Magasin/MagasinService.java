@@ -1,4 +1,4 @@
-package log430.Labos.Services;
+package log430.Labos.Services.Magasin;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,19 +10,22 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
-import log430.Labos.Entities.DemandeReapprovisionnement;
-import log430.Labos.Entities.Magasin;
-import log430.Labos.Entities.StockMagasin;
+import log430.Labos.Entities.Magasin.Magasin;
+import log430.Labos.Entities.Magasin.StockMagasin;
 import log430.Labos.Repositories.DemandeReapprovisionnementRepository;
 import log430.Labos.Repositories.MagasinRepository;
+import log430.Labos.Repositories.StockMagasinRepository;
 
 @Service
 public class MagasinService {
     private final MagasinRepository magasinRepository;
     private final DemandeReapprovisionnementRepository demandeRepository;
+    private final StockMagasinRepository stockMagasinRepository;
 
     public MagasinService(MagasinRepository magasinRepository, 
-                          DemandeReapprovisionnementRepository demandeRepository) {
+                          DemandeReapprovisionnementRepository demandeRepository,
+                          StockMagasinRepository stockMagasinRepository) {
+        this.stockMagasinRepository = stockMagasinRepository;
         this.demandeRepository = demandeRepository;
         this.magasinRepository = magasinRepository;
     }
@@ -34,9 +37,6 @@ public class MagasinService {
 
     public List<Magasin> getAllMagasins() {
         return magasinRepository.findAll();
-    }
-    public List<DemandeReapprovisionnement> getDemandesByMagasin(Long magasinId) {
-        return demandeRepository.findByMagasinId(magasinId);
     }
 
     public List<Map<String, Object>> getDashboard() {
@@ -99,4 +99,14 @@ public class MagasinService {
         return result;
     }
 
+    public Map<Magasin, List<StockMagasin>> getStocksRestantsParMagasin() {
+        final List<Magasin> magasins = magasinRepository.findAll();
+        final Map<Magasin, List<StockMagasin>> stocksParMagasin = new HashMap<>();
+        for (Magasin magasin : magasins) {
+            final List<StockMagasin> stocks = stockMagasinRepository.findByMagasin(magasin);
+            System.out.println("Stocks trouvés pour le magasin " + magasin.getNom() + ": " + stocks.size());
+            stocksParMagasin.put(magasin, stocks);
+        }
+        return stocksParMagasin;
+    }
 }

@@ -1,4 +1,4 @@
-package log430.Labos.Controller;
+package log430.Labos.Controller.Logistique;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
-import log430.Labos.Entities.Magasin;
-import log430.Labos.Entities.StockMagasin;
-import log430.Labos.Services.MagasinService;
-import log430.Labos.Services.StockCentralService;
+import log430.Labos.Entities.Logistique.DemandeReapprovisionnement;
+import log430.Labos.Entities.Magasin.Magasin;
+import log430.Labos.Entities.Magasin.StockMagasin;
+import log430.Labos.Services.Logistique.StockCentralService;
+import log430.Labos.Services.Magasin.MagasinService;
 
 @Controller
 @RequestMapping("/stockCentral")
@@ -56,5 +57,14 @@ public class StockCentralController {
         stockCentralService.creerDemande(magasinId, produitId, quantite);
         redirectAttributes.addFlashAttribute("message", "Demande de réapprovisionnement envoyée !");
         return "redirect:/stockCentral?magasinId=" + magasinId;
+    }
+
+    @GetMapping("/demandesSoumises")
+    public String afficherDemandes(@RequestParam Long magasinId, Model model) {
+        final Magasin magasin = magasinService.getMagasin(magasinId);
+        final List<DemandeReapprovisionnement> demandes = stockCentralService.getDemandesByMagasin(magasinId);
+        model.addAttribute("magasin", magasin);
+        model.addAttribute("demandes", demandes);
+        return "demandesSoumises";
     }
 }

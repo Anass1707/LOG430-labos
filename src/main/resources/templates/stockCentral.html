@@ -33,7 +33,7 @@
         </tr>
     </table>
     <br>
-    <form th:action="@{/demandesSoumises}" method="get" style="display:inline;">
+    <form th:action="@{/stockCentral/demandesSoumises}" method="get" style="display:inline;">
         <input type="hidden" name="magasinId" th:value="${magasin.id}" />
         <button type="submit">Voir les demandes du magasin</button>
     </form>

@@ -1,14 +1,14 @@
-package log430.Labos.Services;
+package log430.Labos.Services.Logistique;
 
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import log430.Labos.Entities.DemandeReapprovisionnement;
-import log430.Labos.Entities.Magasin;
-import log430.Labos.Entities.Produit;
-import log430.Labos.Entities.StockCentral;
+import log430.Labos.Entities.Logistique.DemandeReapprovisionnement;
+import log430.Labos.Entities.Logistique.StockCentral;
+import log430.Labos.Entities.Magasin.Magasin;
+import log430.Labos.Entities.Produit.Produit;
 import log430.Labos.Repositories.DemandeReapprovisionnementRepository;
 import log430.Labos.Repositories.MagasinRepository;
 import log430.Labos.Repositories.ProduitRepository;
@@ -34,6 +34,10 @@ public class StockCentralService {
 
     public List<StockCentral> getStockCentral() {
         return stockCentralRepository.findAll();
+    }
+
+    public List<DemandeReapprovisionnement> getDemandesByMagasin(Long magasinId) {
+        return demandeRepository.findByMagasinId(magasinId);
     }
 
     public void creerDemande(Long magasinId, Long produitId, int quantite) {

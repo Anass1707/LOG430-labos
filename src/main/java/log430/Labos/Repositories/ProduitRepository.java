@@ -1,7 +1,9 @@
 package log430.Labos.Repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import log430.Labos.Entities.Produit.Produit;
+
 import java.util.List;
-import log430.Labos.Entities.Produit;
 import java.util.Optional;
 
 public interface ProduitRepository extends JpaRepository<Produit, Long> {

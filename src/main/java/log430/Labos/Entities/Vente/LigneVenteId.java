@@ -1,4 +1,4 @@
-package log430.Labos.Entities;
+package log430.Labos.Entities.Vente;
 
 
 import jakarta.persistence.*;

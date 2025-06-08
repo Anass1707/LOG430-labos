@@ -1,8 +1,13 @@
-package log430.Labos.Controller;
+package log430.Labos.Controller.Vente;
 import java.util.List;
-import log430.Labos.Entities.Vente;
-import log430.Labos.Services.VenteService;
+import java.util.Map.Entry;
+
+import log430.Labos.Entities.Produit.Produit;
+import log430.Labos.Entities.Vente.Vente;
+import log430.Labos.Services.Vente.VenteService;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,5 +35,12 @@ public class VenteController {
     public List<Vente> getAllVentes() {
         return venteService.getAllVentes();
     }
+    
+    @GetMapping("/produits-plus-vendus")
+    public String produitsPlusVendus(Model model) {
+        final List<Entry<Produit, Integer>> produits = venteService.getProduitsLesPlusVendus(1);
 
+        model.addAttribute("produitsPlusVendus", produits);
+        return "rapportProduitsPlusVendus";
+    }
 }

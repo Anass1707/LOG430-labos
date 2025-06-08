@@ -1,4 +1,4 @@
-package log430.Labos.Controller;
+package log430.Labos.Controller.Produit;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import log430.Labos.Entities.Produit;
-import log430.Labos.Services.ProduitService;
+import log430.Labos.Entities.Produit.Produit;
+import log430.Labos.Services.Produit.ProduitService;
 
 @Controller
 @RequestMapping("/produits")

@@ -1,11 +1,12 @@
-package log430.Labos.Controller;
+package log430.Labos.Controller.Magasin;
 
-import log430.Labos.Entities.Magasin;
-import log430.Labos.Entities.Produit;
-import log430.Labos.Entities.StockMagasin;
-import log430.Labos.Entities.Vente;
-import log430.Labos.Services.MagasinService;
-import log430.Labos.Services.VenteService;
+import log430.Labos.Entities.Magasin.Magasin;
+import log430.Labos.Entities.Magasin.StockMagasin;
+import log430.Labos.Entities.Produit.Produit;
+import log430.Labos.Entities.Vente.Vente;
+import log430.Labos.Services.Magasin.MagasinService;
+import log430.Labos.Services.Vente.VenteService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +41,7 @@ public class RapportController {
         final List<Entry<Produit, Integer>> produitsPlusVendus = venteService.getProduitsLesPlusVendus(1);
         model.addAttribute("produitsPlusVendus", produitsPlusVendus);
 
-        final Map<Magasin, List<StockMagasin>> stocksParMagasin = venteService.getStocksRestantsParMagasin();
+        final Map<Magasin, List<StockMagasin>> stocksParMagasin = magasinService.getStocksRestantsParMagasin();
         model.addAttribute("stocksParMagasin", stocksParMagasin);
 
         return "rapportDetaille";
@@ -54,17 +55,9 @@ public class RapportController {
         return "rapportVentesParMagasin";
     }
 
-    @GetMapping("/produits-plus-vendus")
-    public String produitsPlusVendus(Model model) {
-        final List<Entry<Produit, Integer>> produits = venteService.getProduitsLesPlusVendus(1);
-
-        model.addAttribute("produitsPlusVendus", produits);
-        return "rapportProduitsPlusVendus";
-    }
-
     @GetMapping("/stocks-par-magasin")
     public String stocksParMagasin(Model model) {
-        final Map<Magasin, List<StockMagasin>> stocksParMagasin = venteService.getStocksRestantsParMagasin();
+        final Map<Magasin, List<StockMagasin>> stocksParMagasin = magasinService.getStocksRestantsParMagasin();
         System.out.println("Stocks par magasin: " + stocksParMagasin.size());
         model.addAttribute("stocksParMagasin", stocksParMagasin);
         return "rapportStocksParMagasin";

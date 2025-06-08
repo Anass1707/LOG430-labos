@@ -1,6 +1,8 @@
 package log430.Labos.Repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
-import log430.Labos.Entities.LigneVente;
+
+import log430.Labos.Entities.Vente.LigneVente;
+
 import java.util.List;
 import java.util.Optional;
 

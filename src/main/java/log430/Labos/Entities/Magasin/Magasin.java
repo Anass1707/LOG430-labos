@@ -1,6 +1,8 @@
-package log430.Labos.Entities;
+package log430.Labos.Entities.Magasin;
 
 import jakarta.persistence.*;
+import log430.Labos.Entities.Vente.Vente;
+
 import java.util.List;
 
 @Entity

@@ -1,5 +1,5 @@
-package log430.Labos.Services;
-import log430.Labos.Entities.Produit;
+package log430.Labos.Services.Produit;
+import log430.Labos.Entities.Produit.Produit;
 import log430.Labos.Repositories.ProduitRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;

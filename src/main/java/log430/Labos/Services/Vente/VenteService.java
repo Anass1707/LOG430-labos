@@ -1,13 +1,13 @@
-package log430.Labos.Services;
-import log430.Labos.Entities.Vente;
+package log430.Labos.Services.Vente;
 import log430.Labos.Repositories.VenteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-import log430.Labos.Entities.Produit;
-import log430.Labos.Entities.StockMagasin;
-import log430.Labos.Entities.LigneVente;
-import log430.Labos.Entities.LigneVenteId;
-import log430.Labos.Entities.Magasin;
+
+import log430.Labos.Entities.Vente.LigneVente;
+import log430.Labos.Entities.Vente.LigneVenteId;
+import log430.Labos.Entities.Vente.Vente;
+import log430.Labos.Entities.Magasin.Magasin;
+import log430.Labos.Entities.Produit.Produit;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -99,15 +99,5 @@ public Vente createVente(Vente vente) {
             .sorted((e1, e2) -> e2.getValue() - e1.getValue())
             //.limit(limit)
             .collect(Collectors.toList());
-    }
-    public Map<Magasin, List<StockMagasin>> getStocksRestantsParMagasin() {
-        final List<Magasin> magasins = magasinRepository.findAll();
-        final Map<Magasin, List<StockMagasin>> stocksParMagasin = new HashMap<>();
-        for (Magasin magasin : magasins) {
-            final List<StockMagasin> stocks = stockMagasinRepository.findByMagasin(magasin);
-            System.out.println("Stocks trouvés pour le magasin " + magasin.getNom() + ": " + stocks.size());
-            stocksParMagasin.put(magasin, stocks);
-        }
-        return stocksParMagasin;
     }
 }
