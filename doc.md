@@ -41,20 +41,24 @@ Pour le labo 2, j'ai conservé l'architecture MVC, j'ai amélioré la structure 
 
 ## Les sous-domaines fonctionnels 
 
-Le système développé pour la gestion des magasins, d'un centre logistique et une maison mère est composé en quatre sous-domaines métiers:
+Le système développé pour la gestion des magasins, d'un centre logistique et une maison mère est composé en cinq sous-domaines métiers:
 
 - Logistique:
 Il permet la gestion du stock central et les demandes de réaprovisionnement. Les modèles associés sont: DemandeReaprovisionnement et StockCentral.
 
 - Magasin:
 Il permet de créer les rapports des magasins et la gestion de leurs stocks. Les modèles associés sont: Magasin et StockMagasin.
+
 - Produit:
 Il permet la gestion des produits. Le modèle associé est: Produit.
+
 - Vente:
 Il permet la gestion des ventes et des retours. Les modèles associés sont: Vente, Retour, LigneVente.
 
 - Utilisateur:
 Il permet la gestion des utilisateurs. Le modèle associé est: Utilisateur.
+
+Cette organisation permet une meilleure séparation des responsabilités et une évolution future vers une architecture modulaire ou orientée microservices.
 
 # 1. Introduction et objectifs
 
