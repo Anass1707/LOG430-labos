@@ -1,6 +1,7 @@
 name: Maven CI Workflow
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
 
@@ -64,4 +65,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/log430_labos:v0
+          tags: ${{ secrets.DOCKER_USERNAME }}/log430_labos:v2

@@ -5,6 +5,57 @@ Anass Chiba
 
 https://github.com/Anass1707/LOG430-labos
 
+# Analyse et continuité
+
+## Résumer du Lab 0 et 1
+Durant les Labs 0 et 1, l'application a été construite selon une architecture en couches simple et respecte partiellement l'architecture MVC :
+
+- Utilisation de @RestController pour exposer les endpoints.
+
+- Les entités, services et contrôleurs étaient tous organisés dans des dossiers uniques communs (Controller, services, entities).
+
+- La logique métier était relativement directement codée dans les services.
+
+- L’interface utilisateur n’était pas présente (pas de vues HTML), uniquement des échanges JSON (API REST).
+
+## Éléments conservés et modifiés
+
+Pour le labo 2, j'ai conservé l'architecture MVC, j'ai amélioré la structure des dossiers pour favoriser une organisation par domaine pour plus de lisibilité et scalabilité et j'ai passé de @RestController à @Controller pour supporter les vues Thymleaf que j'ai intégré comme interface utilisateur.
+
+## Exigences introduites au lab 2
+
+- Ajout d’une interface utilisateur minimaliste via des vues Thymeleaf.
+
+- Séparation claire des domaines métiers (Logistique, Vente, Magasin, Utilisateur, Produit).
+
+## Défis architecturaux
+
+* Réorganisation du projet selon DDD.
+
+* Intégration complète du MVC avec vues (Thymeleaf).
+
+* Cohérence transactionnelle entre services.
+
+* Gestion de la croissance de la complexité métier.
+
+
+## Les sous-domaines fonctionnels 
+
+Le système développé pour la gestion des magasins, d'un centre logistique et une maison mère est composé en quatre sous-domaines métiers:
+
+- Logistique:
+Il permet la gestion du stock central et les demandes de réaprovisionnement. Les modèles associés sont: DemandeReaprovisionnement et StockCentral.
+
+- Magasin:
+Il permet de créer les rapports des magasins et la gestion de leurs stocks. Les modèles associés sont: Magasin et StockMagasin.
+- Produit:
+Il permet la gestion des produits. Le modèle associé est: Produit.
+- Vente:
+Il permet la gestion des ventes et des retours. Les modèles associés sont: Vente, Retour, LigneVente.
+
+- Utilisateur:
+Il permet la gestion des utilisateurs. Le modèle associé est: Utilisateur.
+
 # 1. Introduction et objectifs
 
 Ce projet est une application web de gestion logistique pour une chaîne de magasins. Il permet la gestion centralisée des stocks, le suivi des ventes, le réapprovisionnement, la génération de rapports et la visualisation des performances via un tableau de bord.
@@ -102,7 +153,7 @@ Ce projet est une application web de gestion logistique pour une chaîne de maga
 # 10. Annexes
 
 - Diagrammes UML (cas d’utilisation, séquence, classes)
-- Scripts SQL d’initialisation
+
 <div style="page-break-after: always;"></div>
 
 ## Diagrammes

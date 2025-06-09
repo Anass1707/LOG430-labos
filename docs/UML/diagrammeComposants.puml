@@ -4,13 +4,23 @@ package "Présentation" {
   [VenteController] <<Controller>>
   [RapportController] <<Controller>>
   [StockCentralController] <<Controller>>
+  [ProduitController] <<Controller>>
   [Thymeleaf] <<View>>
 }
 
 package "Logique Métier" {
-  [MagasinService] <<Service>>
-  [StockCentralService] <<Service>>
-  [VenteService] <<Service>>
+  package "Domaine Magasin" {
+    [MagasinService] <<Service>>
+  }
+  package "Domaine Logistique" {
+    [StockCentralService] <<Service>>
+  }
+  package "Domaine Vente" {
+    [VenteService] <<Service>>
+  }
+  package "Domaine Produit" {
+    [ProduitService] <<Service>>
+  }
 }
 
 package "Persistance" {
@@ -27,12 +37,14 @@ package "Base de données" {
 [VenteController] -up-> [Thymeleaf]
 [RapportController] -up-> [Thymeleaf]
 [StockCentralController] -up-> [Thymeleaf]
+[ProduitController] -up-> [Thymeleaf]
 
 [VenteController] --> [VenteService]
 [RapportController] --> [MagasinService]
 [StockCentralController] --> [MagasinService]
 [RapportController] --> [VenteService]
 [StockCentralController] --> [StockCentralService]
+[ProduitController] --> [ProduitService]
 
 
 [MagasinService] --> [MagasinRepository]
@@ -45,6 +57,7 @@ package "Base de données" {
 [VenteService] --> [MagasinRepository]
 [VenteService] --> [ProduitRepository]
 [VenteService] --> [StockMagasinRepository]
+[ProduitService] --> [ProduitRepository]
 
 [MagasinRepository] --> [PostgreSQL]
 [VenteRepository] --> [PostgreSQL]
