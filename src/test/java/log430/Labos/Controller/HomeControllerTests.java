@@ -2,7 +2,8 @@ package log430.Labos.Controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import log430.Labos.Entities.Utilisateur.Utilisateur;
+import log430.Labos.Controller.Web.HomeController;
+import log430.Labos.Models.Entities.Utilisateur.Utilisateur;
 import log430.Labos.Repositories.UtilisateurRepository;
 import log430.Labos.Services.Magasin.MagasinService;
 

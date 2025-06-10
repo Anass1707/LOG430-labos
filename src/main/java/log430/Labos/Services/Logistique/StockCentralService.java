@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import log430.Labos.Entities.Logistique.DemandeReapprovisionnement;
-import log430.Labos.Entities.Logistique.StockCentral;
-import log430.Labos.Entities.Magasin.Magasin;
-import log430.Labos.Entities.Produit.Produit;
+import log430.Labos.Models.Entities.Logistique.DemandeReapprovisionnement;
+import log430.Labos.Models.Entities.Logistique.StockCentral;
+import log430.Labos.Models.Entities.Magasin.Magasin;
+import log430.Labos.Models.Entities.Produit.Produit;
 import log430.Labos.Repositories.DemandeReapprovisionnementRepository;
 import log430.Labos.Repositories.MagasinRepository;
 import log430.Labos.Repositories.ProduitRepository;

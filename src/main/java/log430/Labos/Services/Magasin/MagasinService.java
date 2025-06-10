@@ -10,23 +10,19 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
-import log430.Labos.Entities.Magasin.Magasin;
-import log430.Labos.Entities.Magasin.StockMagasin;
-import log430.Labos.Repositories.DemandeReapprovisionnementRepository;
+import log430.Labos.Models.Entities.Magasin.Magasin;
+import log430.Labos.Models.Entities.Magasin.StockMagasin;
 import log430.Labos.Repositories.MagasinRepository;
 import log430.Labos.Repositories.StockMagasinRepository;
 
 @Service
 public class MagasinService {
     private final MagasinRepository magasinRepository;
-    private final DemandeReapprovisionnementRepository demandeRepository;
     private final StockMagasinRepository stockMagasinRepository;
 
-    public MagasinService(MagasinRepository magasinRepository, 
-                          DemandeReapprovisionnementRepository demandeRepository,
+    public MagasinService(MagasinRepository magasinRepository,
                           StockMagasinRepository stockMagasinRepository) {
         this.stockMagasinRepository = stockMagasinRepository;
-        this.demandeRepository = demandeRepository;
         this.magasinRepository = magasinRepository;
     }
 

@@ -1,7 +1,7 @@
 package log430.Labos.Repositories;
 
-import log430.Labos.Entities.Magasin.Magasin;
-import log430.Labos.Entities.Magasin.StockMagasin;
+import log430.Labos.Models.Entities.Magasin.Magasin;
+import log430.Labos.Models.Entities.Magasin.StockMagasin;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

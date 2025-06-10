@@ -11,6 +11,9 @@ pour les fonctions administratives. Vous pouvez consulter [les diagrammes liés 
 - Visualiser les performances des magasins dans un tableau de bord
 - Mettre à jour les produits depuis la maison mère
 - Approvisionner un magasin depuis le centre logistique
+- Créer un produit
+- Mettre à jour un produit
+- Chercher un produit par nom ou catégorie ou id
 
 # Besoins non-fonctionnels
 
@@ -28,6 +31,10 @@ Pour pouvoir exécuter cette application localement il y a des prérequis néces
 2. Une version maven 3.9+ installée (vous pouvez utiliser la commde "mvn -v" pour vérifier votre version).
 3. Docker et Docker-compose installés.
 4. Cloner le projet et se placer à ce niveau "~/projects/LOG430-labos"
+
+### Note
+- Vous pouvez facilement tester l'api avec l’interface de Swagger http://localhost:8080/swagger-ui.html
+- Vous retrouvez la doccumentation Swagger dans le fichier Swagger.json
 
 ## Lancer l'application
 1. Valider que le serveur Psql est active avec la commande "sudo systemctl status postgresql"

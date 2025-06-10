@@ -3,17 +3,15 @@ import log430.Labos.Repositories.VenteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import log430.Labos.Entities.Vente.LigneVente;
-import log430.Labos.Entities.Vente.LigneVenteId;
-import log430.Labos.Entities.Vente.Vente;
-import log430.Labos.Entities.Magasin.Magasin;
-import log430.Labos.Entities.Produit.Produit;
-
 import org.springframework.transaction.annotation.Transactional;
 
+import log430.Labos.Models.Entities.Magasin.Magasin;
+import log430.Labos.Models.Entities.Produit.Produit;
+import log430.Labos.Models.Entities.Vente.LigneVente;
+import log430.Labos.Models.Entities.Vente.LigneVenteId;
+import log430.Labos.Models.Entities.Vente.Vente;
 import log430.Labos.Repositories.MagasinRepository;
 import log430.Labos.Repositories.ProduitRepository;
-import log430.Labos.Repositories.StockMagasinRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,12 +23,10 @@ public class VenteService {
     private final VenteRepository venteRepository;
     private final ProduitRepository produitRepository;
     private final MagasinRepository magasinRepository;
-    private final StockMagasinRepository stockMagasinRepository;
 
     public VenteService(VenteRepository venteRepository, ProduitRepository produitRepository,
-                        MagasinRepository magasinRepository, StockMagasinRepository stockMagasinRepository) {
+                        MagasinRepository magasinRepository) {
         this.magasinRepository = magasinRepository;
-        this.stockMagasinRepository = stockMagasinRepository;
         this.produitRepository = produitRepository;
         this.venteRepository = venteRepository;
     }

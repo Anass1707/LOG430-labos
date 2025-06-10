@@ -2,8 +2,8 @@ package log430.Labos.Repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
-import log430.Labos.Entities.Magasin.Magasin;
-import log430.Labos.Entities.Vente.Vente;
+import log430.Labos.Models.Entities.Magasin.Magasin;
+import log430.Labos.Models.Entities.Vente.Vente;
 
 import java.util.Optional;
 

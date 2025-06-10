@@ -116,6 +116,9 @@ Ce projet est une application web de gestion logistique pour une chaîne de maga
 - Visualiser les performances des magasins dans un tableau de bord
 - Mettre à jour les produits depuis la maison mère
 - Approvisionner un magasin depuis le centre logistique
+- Créer un produit
+- Mettre à jour un produit
+- Chercher un produit par nom ou catégorie ou id
 
 ---
 
