@@ -1,0 +1,106 @@
+{
+  "uid": "spring-boot-monitor",
+  "title": "Spring Boot Application Monitoring",
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "HTTP Requests per Second",
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 6 },
+      "targets": [
+        {
+          "expr": "rate(http_server_requests_seconds_count[1m])",
+          "legendFormat": "{{method}} {{uri}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Request Duration (p95)",
+      "gridPos": { "x": 0, "y": 6, "w": 12, "h": 6 },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket[1m])) by (le, uri))",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "JVM Memory Used (MB)",
+      "gridPos": { "x": 0, "y": 12, "w": 4, "h": 4 },
+      "targets": [
+        {
+          "expr": "sum(jvm_memory_used_bytes) / 1024 / 1024",
+          "refId": "C"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "CPU Process Usage",
+      "gridPos": { "x": 4, "y": 12, "w": 4, "h": 4 },
+      "targets": [
+        {
+          "expr": "rate(process_cpu_usage[1m])",
+          "refId": "D"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "JVM Threads Live",
+      "gridPos": { "x": 8, "y": 12, "w": 4, "h": 4 },
+      "targets": [
+        {
+          "expr": "jvm_threads_live",
+          "refId": "E"
+        }
+      ]
+    },
+{
+  "type": "stat",
+  "title": "Latence moyenne (ms)",
+  "gridPos": { "x": 0, "y": 16, "w": 4, "h": 4 },
+  "targets": [
+    {
+      "expr": "sum(rate(http_server_requests_seconds_sum[1m])) by (uri) / sum(rate(http_server_requests_seconds_count[1m])) by (uri) * 1000",
+      "refId": "F"
+    }
+  ]
+},{
+  "type": "stat",
+  "title": "API Error Rate (%)",
+  "gridPos": { "x": 0, "y": 20, "w": 6, "h": 4 },
+  "targets": [
+    {
+      "expr": "sum(rate(http_server_requests_seconds_count{status=~\"4..|5..\"}[1m])) / sum(rate(http_server_requests_seconds_count[1m])) * 100",
+      "refId": "A"
+    }
+  ],
+  "fieldConfig": {
+    "defaults": {
+      "unit": "percent",
+      "decimals": 1,
+      "color": {
+        "mode": "thresholds"
+      },
+      "thresholds": {
+        "mode": "percentage",
+        "steps": [
+          { "color": "green", "value": null },
+          { "color": "orange", "value": 5 },
+          { "color": "red", "value": 10 }
+        ]
+      }
+    }
+  }
+}
+
+  ]
+}
+

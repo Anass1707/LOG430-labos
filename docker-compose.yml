@@ -25,5 +25,27 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./Monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./Monitoring/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./Monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
 volumes:
   pgdata:
+  grafana-storage:
