@@ -1,11 +1,18 @@
 @startuml
 
-package "Présentation" {
-  [VenteController] <<Controller>>
-  [RapportController] <<Controller>>
-  [StockCentralController] <<Controller>>
-  [ProduitController] <<Controller>>
-  [Thymeleaf] <<View>>
+package "Infrastructure" {
+  [NGINX] <<LoadBalancer>>
+  [Redis] <<Cache>>
+  [Prometheus] <<Monitoring>>
+  [Grafana] <<Dashboard>>
+  [PostgreSQL] <<Database>>
+}
+
+package "Présentation API" {
+  [VenteController] <<RestController>>
+  [RapportController] <<RestController>>
+  [StockCentralController] <<RestController>>
+  [ProduitController] <<RestController>>
 }
 
 package "Logique Métier" {
@@ -31,38 +38,45 @@ package "Persistance" {
   [ProduitRepository] <<Repository>>
   [StockMagasinRepository] <<Repository>>
 }
-package "Base de données" {
-  [PostgreSQL] <<Database>>
-}
-[VenteController] -up-> [Thymeleaf]
-[RapportController] -up-> [Thymeleaf]
-[StockCentralController] -up-> [Thymeleaf]
-[ProduitController] -up-> [Thymeleaf]
 
-[VenteController] --> [VenteService]
-[RapportController] --> [MagasinService]
-[StockCentralController] --> [MagasinService]
-[RapportController] --> [VenteService]
-[StockCentralController] --> [StockCentralService]
-[ProduitController] --> [ProduitService]
+' --- Relations ---
 
+[NGINX] -down-> [VenteController]
+[NGINX] -down-> [RapportController]
+[NGINX] -down-> [StockCentralController]
+[NGINX] -down-> [ProduitController]
 
-[MagasinService] --> [MagasinRepository]
-[MagasinService] --> [DemandeReapprovisionnementRepository]
-[StockCentralService] --> [StockCentralRepository]
-[StockCentralService] --> [DemandeReapprovisionnementRepository]
-[StockCentralService] --> [ProduitRepository]
-[StockCentralService] --> [MagasinRepository]
-[VenteService] --> [VenteRepository]
-[VenteService] --> [MagasinRepository]
-[VenteService] --> [ProduitRepository]
-[VenteService] --> [StockMagasinRepository]
-[ProduitService] --> [ProduitRepository]
+[Prometheus] --> [VenteController] : /actuator/prometheus
+[Prometheus] --> [ProduitController] : /actuator/prometheus
+[Grafana] --> [Prometheus]
 
-[MagasinRepository] --> [PostgreSQL]
-[VenteRepository] --> [PostgreSQL]
-[StockCentralRepository] --> [PostgreSQL]
-[DemandeReapprovisionnementRepository] --> [PostgreSQL]
-[ProduitRepository] --> [PostgreSQL]
-[StockMagasinRepository] --> [PostgreSQL]
+[Redis] <.. [MagasinService] : @Cacheable
+[Redis] <.. [ProduitService] : @Cacheable
+
+[VenteController] -down-> [VenteService]
+[RapportController] -down-> [MagasinService]
+[StockCentralController] -down-> [MagasinService]
+[RapportController] -down-> [VenteService]
+[StockCentralController] -down-> [StockCentralService]
+[ProduitController] -down-> [ProduitService]
+
+[MagasinService] -up-> [MagasinRepository]
+[MagasinService] -up-> [DemandeReapprovisionnementRepository]
+[StockCentralService] -up-> [StockCentralRepository]
+[StockCentralService] -up-> [DemandeReapprovisionnementRepository]
+[StockCentralService] -up-> [ProduitRepository]
+[StockCentralService] -up-> [MagasinRepository]
+[VenteService] -up-> [VenteRepository]
+[VenteService] -up-> [MagasinRepository]
+[VenteService] -up-> [ProduitRepository]
+[VenteService] -up-> [StockMagasinRepository]
+[ProduitService] -up-> [ProduitRepository]
+
+[MagasinRepository] -down-> [PostgreSQL]
+[VenteRepository] -down-> [PostgreSQL]
+[StockCentralRepository] -down-> [PostgreSQL]
+[DemandeReapprovisionnementRepository] -down-> [PostgreSQL]
+[ProduitRepository] -down-> [PostgreSQL]
+[StockMagasinRepository] -down-> [PostgreSQL]
+
 @enduml

@@ -3,19 +3,60 @@
 node "Clients Web" {
   artifact "Navigateurs web"
 }
-node "Serveur App" {
-  component "Contrôleur MVC"
-  component "Service Métier"
-  component "Repository"
-  component "Vue\n(Thymeleaf)"
+
+node "Load Balancer" as lb {
+  component "NGINX"
+}
+
+node "Cluster API" {
+  node "Instance API 1" {
+    component "Controllers REST"
+    component "Services Métier"
+    component "Repositories"
+  }
+  node "Instance API 2" {
+    component "Controllers REST"
+    component "Services Métier"
+    component "Repositories"
+  }
+  node "Instance API 3" {
+    component "Controllers REST"
+    component "Services Métier"
+    component "Repositories"
+  }
+}
+
+node "Cache Distribué" {
+  database "Redis"
 }
 
 node "Base de données" {
   database "PostgreSQL"
 }
 
-"Navigateurs web" --> "Contrôleur MVC"
-"Contrôleur MVC" --> "Service Métier"
-"Service Métier" --> "Repository"
-"Repository" --> "PostgreSQL" : JDBC
+node "Monitoring" {
+  component "Prometheus"
+  component "Grafana"
+}
+
+"Navigateurs web" --> lb : HTTP/HTTPS
+
+"Grafana" --> "Prometheus" : PromQL
+
+lb --> "Instance API 1" : HTTP
+lb --> "Instance API 2" : HTTP
+lb --> "Instance API 3" : HTTP
+
+"Instance API 1" --> "Redis" : Cache
+"Instance API 2" --> "Redis" : Cache
+"Instance API 3" --> "Redis" : Cache
+
+"Instance API 1" --> "PostgreSQL" : JDBC
+"Instance API 2" --> "PostgreSQL" : JDBC
+"Instance API 3" --> "PostgreSQL" : JDBC
+
+"Prometheus" --> "Instance API 1" : /actuator/prometheus
+"Prometheus" --> "Instance API 2" : /actuator/prometheus
+"Prometheus" --> "Instance API 3" : /actuator/prometheus
+
 @enduml
