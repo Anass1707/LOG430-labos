@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
-import log430.Labos.Models.Entities.Logistique.DemandeReapprovisionnement;
-import log430.Labos.Models.Entities.Magasin.Magasin;
-import log430.Labos.Models.Entities.Magasin.StockMagasin;
+import log430.Labos.Models.DTOs.DemandeReapprovisionnementDTO;
+import log430.Labos.Models.DTOs.MagasinDTO;
 import log430.Labos.Services.Logistique.StockCentralService;
 import log430.Labos.Services.Magasin.MagasinService;
 
@@ -27,27 +26,27 @@ public class StockCentralController {
         this.magasinService = magasinService;
     }
 
-    @GetMapping
-    public String afficherStockCentral(@RequestParam(required = false) Long magasinId, Model model) {
-        model.addAttribute("stockCentral", stockCentralService.getStockCentral());
-        model.addAttribute("magasins", magasinService.getAllMagasins());
+    // @GetMapping
+    // public String afficherStockCentral(@RequestParam(required = false) Long magasinId, Model model) {
+    //     model.addAttribute("stockCentral", stockCentralService.getStockCentral());
+    //     model.addAttribute("magasins", magasinService.getAllMagasins());
 
-        if (magasinId != null) {
-            final Magasin magasin = magasinService.getMagasin(magasinId);
-            model.addAttribute("magasin", magasin);
+    //     if (magasinId != null) {
+    //         final MagasinDTO magasin = magasinService.getMagasin(magasinId);
+    //         model.addAttribute("magasin", magasin);
 
-            // Récupère le stock du magasin sélectionné
-            final List<StockMagasin> stockMagasinList = magasinService.getMagasin(magasinId).getStocks();
-            model.addAttribute("stockMagasin", stockMagasinList);
+    //         // Récupère le stock du magasin sélectionné
+    //         final List<StockMagasin> stockMagasinList = magasinService.getMagasin(magasinId).getStocks();
+    //         model.addAttribute("stockMagasin", stockMagasinList);
 
-            final Map<Long, StockMagasin> stockMagasinMap = new HashMap<>();
-            for (StockMagasin s : stockMagasinList) {
-               stockMagasinMap.put(s.getProduit().getId(), s);
-            }
-            model.addAttribute("stockMagasinMap", stockMagasinMap);
-        }
-        return "stockCentral";
-    }
+    //         final Map<Long, StockMagasin> stockMagasinMap = new HashMap<>();
+    //         for (StockMagasin s : stockMagasinList) {
+    //            stockMagasinMap.put(s.getProduit().getId(), s);
+    //         }
+    //         model.addAttribute("stockMagasinMap", stockMagasinMap);
+    //     }
+    //     return "stockCentral";
+    // }
 
     @PostMapping("/demande")
     public String creerDemande(@RequestParam Long magasinId,
@@ -61,8 +60,8 @@ public class StockCentralController {
 
     @GetMapping("/demandesSoumises")
     public String afficherDemandes(@RequestParam Long magasinId, Model model) {
-        final Magasin magasin = magasinService.getMagasin(magasinId);
-        final List<DemandeReapprovisionnement> demandes = stockCentralService.getDemandesByMagasin(magasinId);
+        final MagasinDTO magasin = magasinService.getMagasin(magasinId);
+        final List<DemandeReapprovisionnementDTO> demandes = stockCentralService.getDemandesByMagasin(magasinId);
         model.addAttribute("magasin", magasin);
         model.addAttribute("demandes", demandes);
         return "demandesSoumises";

@@ -18,6 +18,7 @@ public class Vente {
     @JoinColumn(name = "id_utilisateur")
     private Utilisateur utilisateur;
 
+    @Column(name = "date_vente")
     private String dateVente;
     private float total;
 

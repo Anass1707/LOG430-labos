@@ -10,8 +10,12 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
+import log430.Labos.Models.DTOs.MagasinDTO;
+import log430.Labos.Models.DTOs.StockMagasinDTO;
 import log430.Labos.Models.Entities.Magasin.Magasin;
 import log430.Labos.Models.Entities.Magasin.StockMagasin;
+import log430.Labos.Models.Mappers.MagasinMapper;
+import log430.Labos.Models.Mappers.StockMagasinMapper;
 import log430.Labos.Repositories.MagasinRepository;
 import log430.Labos.Repositories.StockMagasinRepository;
 
@@ -26,13 +30,16 @@ public class MagasinService {
         this.magasinRepository = magasinRepository;
     }
 
-    public Magasin getMagasin(Long id) {
+    public MagasinDTO getMagasin(Long id) {
         return magasinRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Magasin non trouvé"));
+            .map(magasin -> MagasinMapper.toDTO(magasin))
+            .orElseThrow(() -> new EntityNotFoundException("Magasin non trouvé pour l'ID: " + id));
     }
 
-    public List<Magasin> getAllMagasins() {
-        return magasinRepository.findAll();
+    public List<MagasinDTO> getAllMagasins() {
+        return magasinRepository.findAll().stream()
+            .map(MagasinMapper::toDTO)
+            .toList();
     }
 
     public List<Map<String, Object>> getDashboard() {
@@ -40,7 +47,7 @@ public class MagasinService {
         final LocalDate today = LocalDate.now();
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 
-        for (Magasin magasin : getAllMagasins()) {
+        for (Magasin magasin : magasinRepository.findAll()) {
             final Map<String, Object> indicateurs = new HashMap<>();
             indicateurs.put("magasin", magasin);
 
@@ -95,13 +102,16 @@ public class MagasinService {
         return result;
     }
 
-    public Map<Magasin, List<StockMagasin>> getStocksRestantsParMagasin() {
+    public Map<MagasinDTO, List<StockMagasinDTO>> getStocksRestantsParMagasin() {
         final List<Magasin> magasins = magasinRepository.findAll();
-        final Map<Magasin, List<StockMagasin>> stocksParMagasin = new HashMap<>();
+        final Map<MagasinDTO, List<StockMagasinDTO>> stocksParMagasin = new HashMap<>();
         for (Magasin magasin : magasins) {
-            final List<StockMagasin> stocks = stockMagasinRepository.findByMagasin(magasin);
+            final List<StockMagasinDTO> stocks = stockMagasinRepository.findByMagasin(magasin)
+            .stream().map(StockMagasinMapper::toDTO)
+            .toList();
             System.out.println("Stocks trouvés pour le magasin " + magasin.getNom() + ": " + stocks.size());
-            stocksParMagasin.put(magasin, stocks);
+            final MagasinDTO magasinDTO = MagasinMapper.toDTO(magasin);
+            stocksParMagasin.put(magasinDTO, stocks);
         }
         return stocksParMagasin;
     }

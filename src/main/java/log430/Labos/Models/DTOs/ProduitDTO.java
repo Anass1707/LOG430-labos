@@ -1,13 +1,20 @@
 package log430.Labos.Models.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ProduitDTO {
+    @JsonProperty("id")
     private Long id;
+    @JsonProperty("nom")
     private String nom;
+    @JsonProperty("prix")
     private float prix;
+    @JsonProperty("categorie")
     private String categorie;
 
     public ProduitDTO() {
     }
+    
     public ProduitDTO(Long id, String nom, String categorie, float prix) {
         this.id = id;
         this.nom = nom;

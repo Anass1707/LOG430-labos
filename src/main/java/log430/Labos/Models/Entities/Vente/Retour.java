@@ -17,6 +17,7 @@ public class Retour {
     @JoinColumn(name = "id_vente")
     private Vente vente;
 
+    @Column(name = "date_retour")
     private String dateRetour;
     private String motif;
 

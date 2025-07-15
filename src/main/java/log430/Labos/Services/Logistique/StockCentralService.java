@@ -5,10 +5,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import log430.Labos.Models.DTOs.DemandeReapprovisionnementDTO;
+import log430.Labos.Models.DTOs.StockCentralDTO;
 import log430.Labos.Models.Entities.Logistique.DemandeReapprovisionnement;
 import log430.Labos.Models.Entities.Logistique.StockCentral;
 import log430.Labos.Models.Entities.Magasin.Magasin;
 import log430.Labos.Models.Entities.Produit.Produit;
+import log430.Labos.Models.Mappers.DemandeReapprovisionnementMapper;
+import log430.Labos.Models.Mappers.StockCentralMapper;
 import log430.Labos.Repositories.DemandeReapprovisionnementRepository;
 import log430.Labos.Repositories.MagasinRepository;
 import log430.Labos.Repositories.ProduitRepository;
@@ -32,12 +36,13 @@ public class StockCentralService {
         this.produitRepository = produitRepository;
     }
 
-    public List<StockCentral> getStockCentral() {
-        return stockCentralRepository.findAll();
+    public List<StockCentralDTO> getStockCentral() {
+        return stockCentralRepository.findAll().stream().map(StockCentralMapper::toDTO).toList();
     }
 
-    public List<DemandeReapprovisionnement> getDemandesByMagasin(Long magasinId) {
-        return demandeRepository.findByMagasinId(magasinId);
+    public List<DemandeReapprovisionnementDTO> getDemandesByMagasin(Long magasinId) {
+        return demandeRepository.findByMagasinId(magasinId)
+        .stream().map(DemandeReapprovisionnementMapper::toDTO).toList();
     }
 
     public void creerDemande(Long magasinId, Long produitId, int quantite) {

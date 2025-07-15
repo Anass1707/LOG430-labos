@@ -1,7 +1,7 @@
 package log430.Labos.Controller.Web;
 import log430.Labos.Repositories.UtilisateurRepository;
 import log430.Labos.Services.Magasin.MagasinService;
-import log430.Labos.Models.Entities.Magasin.Magasin;
+import log430.Labos.Models.DTOs.MagasinDTO;
 import log430.Labos.Models.Entities.Utilisateur.Utilisateur;
 
 import java.util.List;
@@ -54,13 +54,13 @@ public class HomeController {
     }
     @GetMapping("/")
     public String choisirMagasin(Model model) {
-        final List<Magasin> magasins = magasinService.getAllMagasins();
+        final List<MagasinDTO> magasins = magasinService.getAllMagasins();
         if (magasins.isEmpty()) {
             System.out.println("Aucun magasin trouvé.");
             model.addAttribute("message", "Aucun magasin trouvé.");
         } else {
             System.out.println("Liste des magasins :");
-            for (Magasin magasin : magasins) {
+            for (MagasinDTO magasin : magasins) {
                 System.out.println(magasin.getNom() + " - " + magasin.getAdresse());
             }
             model.addAttribute("magasins", magasins);

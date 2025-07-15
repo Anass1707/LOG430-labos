@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import log430.Labos.Controller.API.Produit.ProductController;
 import log430.Labos.Models.DTOs.ProduitDTO;
 import log430.Labos.Models.Entities.Produit.Produit;
-import log430.Labos.Models.Mappers.ProduitMapper;
 import log430.Labos.Services.Produit.ProduitService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,7 +39,7 @@ public class ProductControllerTest {
     @Test
     @DisplayName("GET /api/v1/produits - OK")
     void testGetAllProduits() throws Exception {
-        Produit p = new Produit(1,"Casque", "Électronique", 2.5f);
+        ProduitDTO p = new ProduitDTO(1L, "Casque", "Électronique", 2.5f);
         Mockito.when(produitService.getAllProduits()).thenReturn(List.of(p));
 
         mockMvc.perform(get("/api/v1/produits"))
@@ -51,7 +50,7 @@ public class ProductControllerTest {
     @Test
     @DisplayName("GET /api/v1/produits/{id} - OK")
     void testGetProduitById_found() throws Exception {
-        Produit p = new Produit(1,"Casque", "Électronique", 2.5f);
+        ProduitDTO p = new ProduitDTO(1L,"Casque", "Électronique", 2.5f);
         Mockito.when(produitService.getProduit(1L)).thenReturn(p);
 
         mockMvc.perform(get("/api/v1/produits/1"))
@@ -71,7 +70,7 @@ public class ProductControllerTest {
     @Test
     @DisplayName("GET /api/v1/produits/nom?nom=Casque - OK")
     void testGetProduitByNom() throws Exception {
-        Produit p = new Produit(1,"Casque", "Électronique", 2.5f);
+        ProduitDTO p = new ProduitDTO(1L,"Casque", "Électronique", 2.5f);
         Mockito.when(produitService.getProduitByNom("Casque")).thenReturn(p);
 
         mockMvc.perform(get("/api/v1/produits/nom").param("nom", "Casque"))
@@ -85,7 +84,7 @@ public class ProductControllerTest {
         ProduitDTO dto = new ProduitDTO(1L, "Casque", "Électronique", 2.5f);
         Produit created = new Produit(1,"Casque", "Électronique", 2.5f);
 
-        Mockito.when(produitService.addProduit(any())).thenReturn(created);
+        Mockito.when(produitService.addProduit(any())).thenReturn(dto);
 
         mockMvc.perform(post("/api/v1/produits")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -98,9 +97,9 @@ public class ProductControllerTest {
     @DisplayName("PUT /api/v1/produits/{id} - OK")
     void testUpdateProduit() throws Exception {
         ProduitDTO dto = new ProduitDTO(1L, "Casque", "Électronique", 2.5f);
-        Produit updated =  new Produit(1,"Casque", "Électronique", 20.5f);
+        ProduitDTO updatedDto = new ProduitDTO(1L, "Casque", "Électronique", 20.5f);
 
-        Mockito.when(produitService.updateProduit(eq(2L), any())).thenReturn(updated);
+        Mockito.when(produitService.updateProduit(eq(2L), any())).thenReturn(updatedDto);
 
         mockMvc.perform(put("/api/v1/produits/2")
                 .contentType(MediaType.APPLICATION_JSON)

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import log430.Labos.Models.Entities.Produit.Produit;
+import log430.Labos.Models.DTOs.ProduitDTO;
 import log430.Labos.Services.Produit.ProduitService;
 
 @Controller
@@ -30,21 +30,21 @@ public class ProduitController {
 
     @GetMapping("/{id}")
     public String getProduitById(@PathVariable Long id, Model model) {
-        final Produit produit = produitService.getProduit(id);
+        final ProduitDTO produit = produitService.getProduit(id);
         model.addAttribute("produit", produit);
         return "produitDetails";
     }
 
     @GetMapping("/nom")
     public String getProduitByNom(@RequestParam String nom, Model model) {
-        final Produit produit = produitService.getProduitByNom(nom);
+        final ProduitDTO produit = produitService.getProduitByNom(nom);
         model.addAttribute("produit", produit);
         return "produitDetails";
     }
 
     @GetMapping("/categorie")
     public String getProduitsByCategorie(@RequestParam String categorie, Model model) {
-        final List<Produit> produits = produitService.getProduitsByCategorie(categorie);
+        final List<ProduitDTO> produits = produitService.getProduitsByCategorie(categorie);
         model.addAttribute("produits", produits);
         return "produits";
     }

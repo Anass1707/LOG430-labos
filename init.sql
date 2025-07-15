@@ -1,6 +1,6 @@
 -- Table: Utilisateurs
 CREATE TABLE IF NOT EXISTS utilisateurs (
-  id SERIAL PRIMARY KEY,
+  id BIGSERIAL PRIMARY KEY,
   nom VARCHAR(100) NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL
 );
@@ -11,11 +11,11 @@ VALUES ('Jean Dupont', 'jean.dupont@example.com'),
 
 -- Table: Produits
 CREATE TABLE IF NOT EXISTS produits (
-  id SERIAL PRIMARY KEY,
+  id BIGSERIAL PRIMARY KEY,
   nom VARCHAR(100) NOT NULL,
   categorie VARCHAR(100),
-  prix NUMERIC(10, 2) NOT NULL,
-  quantite INT NOT NULL
+  prix REAL NOT NULL,
+  quantite BIGINT NOT NULL
 );
 
 INSERT INTO produits (nom, categorie, prix, quantite) VALUES
@@ -25,27 +25,27 @@ INSERT INTO produits (nom, categorie, prix, quantite) VALUES
 
 -- Table: magasins
 CREATE TABLE IF NOT EXISTS magasins (
-  id SERIAL PRIMARY KEY,
+  id BIGSERIAL PRIMARY KEY,
   nom VARCHAR(100) NOT NULL,
   adresse VARCHAR(255)
 );
 
 -- Table: Vente
 CREATE TABLE IF NOT EXISTS ventes (
-  id SERIAL PRIMARY KEY,
-  id_utilisateur INT NOT NULL,
-  date_vente DATE NOT NULL,
-  total NUMERIC(10, 2) NOT NULL,
-  id_magasin INT NOT NULL,
+  id BIGSERIAL PRIMARY KEY,
+  id_utilisateur BIGINT NOT NULL,
+  date_vente VARCHAR(255) NOT NULL,
+  total REAL NOT NULL,
+  id_magasin BIGINT NOT NULL,
   FOREIGN KEY (id_magasin) REFERENCES magasins(id),
   FOREIGN KEY (id_utilisateur) REFERENCES utilisateurs(id)
 );
 
 -- Table: LigneVente 
 CREATE TABLE IF NOT EXISTS ligne_vente (
-  id_vente INT NOT NULL,
-  id_produit INT NOT NULL,
-  quantite INT NOT NULL,
+  id_vente BIGINT NOT NULL,
+  id_produit BIGINT NOT NULL,
+  quantite BIGINT NOT NULL,
   PRIMARY KEY (id_vente, id_produit),
   FOREIGN KEY (id_vente) REFERENCES ventes(id) ON DELETE CASCADE,
   FOREIGN KEY (id_produit) REFERENCES produits(id)
@@ -53,20 +53,22 @@ CREATE TABLE IF NOT EXISTS ligne_vente (
 
 -- Table: Retour
 CREATE TABLE IF NOT EXISTS retours (
-  id SERIAL PRIMARY KEY,
-  id_vente INT NOT NULL,
+  id BIGSERIAL PRIMARY KEY,
+  id_vente BIGINT NOT NULL,
+  id_utilisateur BIGINT,
   date_retour DATE NOT NULL,
   motif TEXT,
+  FOREIGN KEY (id_utilisateur) REFERENCES utilisateurs(id),
   FOREIGN KEY (id_vente) REFERENCES ventes(id)
 );
 
 -- Table: stock_magasin
 CREATE TABLE IF NOT EXISTS stock_magasin (
-  id SERIAL PRIMARY KEY,
-  id_magasin INT NOT NULL,
-  id_produit INT NOT NULL,
-  quantite INT NOT NULL,
-  minimum_stock INT NOT NULL,
+  id BIGSERIAL PRIMARY KEY,
+  id_magasin BIGINT NOT NULL,
+  id_produit BIGINT NOT NULL,
+  quantite BIGINT NOT NULL,
+  minimum_stock BIGINT NOT NULL,
   FOREIGN KEY (id_magasin) REFERENCES magasins(id),
   FOREIGN KEY (id_produit) REFERENCES produits(id),
   UNIQUE (id_magasin, id_produit)
@@ -74,19 +76,19 @@ CREATE TABLE IF NOT EXISTS stock_magasin (
 
 -- Table: stock_central
 CREATE TABLE IF NOT EXISTS stock_central (
-  id SERIAL PRIMARY KEY,
-  id_produit INT NOT NULL,
-  quantite INT NOT NULL,
+  id BIGSERIAL PRIMARY KEY,
+  id_produit BIGINT NOT NULL,
+  quantite BIGINT NOT NULL,
   FOREIGN KEY (id_produit) REFERENCES produits(id),
   UNIQUE (id_produit)
 );
 
 -- Table: demandes_reapprovisionnement 
 CREATE TABLE IF NOT EXISTS demandes_reapprovisionnement (
-  id SERIAL PRIMARY KEY,
-  id_magasin INT NOT NULL,
-  id_produit INT NOT NULL,
-  quantite_demandee INT NOT NULL,
+  id BIGSERIAL PRIMARY KEY,
+  id_magasin BIGINT NOT NULL,
+  id_produit BIGINT NOT NULL,
+  quantite_demandee BIGINT NOT NULL,
   date_demande DATE NOT NULL DEFAULT CURRENT_DATE,
   statut VARCHAR(50) DEFAULT 'EN_ATTENTE',
   FOREIGN KEY (id_magasin) REFERENCES magasins(id),

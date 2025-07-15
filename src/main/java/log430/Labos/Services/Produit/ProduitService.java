@@ -1,14 +1,15 @@
 package log430.Labos.Services.Produit;
+
 import log430.Labos.Models.DTOs.ProduitDTO;
 import log430.Labos.Models.Entities.Produit.Produit;
 import log430.Labos.Models.Mappers.ProduitMapper;
 import log430.Labos.Repositories.ProduitRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProduitService {
@@ -19,43 +20,48 @@ public class ProduitService {
         this.produitRepository = produitRepository;
     }
 
-    @Cacheable(value = "produitById", key = "#id")
-    public Produit getProduit(Long id) {
-        return produitRepository.findById(id)
+    public ProduitDTO getProduit(Long id) {
+        final Produit produit = produitRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Produit non trouvé"));
+        return ProduitMapper.toDTO(produit);
     }
 
-    @Cacheable("produits")
-    public List<Produit> getAllProduits() {
-        return produitRepository.findAll();
+    @Cacheable(value = "produits", unless = "#result == null || #result.isEmpty()")
+    public List<ProduitDTO> getAllProduits() {
+        return produitRepository.findAll().stream()
+                .map(ProduitMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+    public ProduitDTO getProduitByNom(String nom) {
+        final Produit produit = produitRepository.findByNom(nom);
+        return produit != null ? ProduitMapper.toDTO(produit) : null;
     }
 
-    public void deleteProduit(Long id) {
-        produitRepository.deleteById(id);
+    public List<ProduitDTO> getProduitsByCategorie(String categorie) {
+        return produitRepository.findByCategorie(categorie).stream()
+                .map(ProduitMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    @Cacheable(value = "produitByNom", key = "#nom")
-    public Produit getProduitByNom(String nom) {
-        return produitRepository.findByNom(nom);
+    @Transactional
+    public ProduitDTO addProduit(ProduitDTO produitDTO) {
+        final Produit produitEntity = ProduitMapper.toEntity(produitDTO);
+        final Produit createdProduit = produitRepository.save(produitEntity);
+        return ProduitMapper.toDTO(createdProduit);
     }
 
-    @Cacheable(value = "produitByCategorie", key = "#categorie")
-    public List<Produit> getProduitsByCategorie(String categorie) {
-        return produitRepository.findByCategorie(categorie);
-    }
-
-    @CacheEvict(value = {"produits", "produitById"}, allEntries = true)
-    public Produit addProduit(ProduitDTO produit) {
-        final Produit produitEntity = ProduitMapper.toEntity(produit);
-        return produitRepository.save(produitEntity);
-    }
-
-    @CacheEvict(value = {"produits", "produitById"}, allEntries = true)
-    public Produit updateProduit(Long id, ProduitDTO produitDTO) {
-        final Produit produit = getProduit(id);
+    @Transactional
+    public ProduitDTO updateProduit(Long id, ProduitDTO produitDTO) {
+        final Produit produit = produitRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Produit non trouvé"));
         produit.setNom(produitDTO.getNom());
         produit.setCategorie(produitDTO.getCategorie());
         produit.setPrix(produitDTO.getPrix());
-        return produitRepository.save(produit);
+        return ProduitMapper.toDTO(produitRepository.save(produit));
+    }
+
+    @Transactional
+    public void deleteProduit(Long id) {
+        produitRepository.deleteById(id);
     }
 }
