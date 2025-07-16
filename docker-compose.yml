@@ -1,22 +1,26 @@
 version: '3.8'
 
 services:
-  nginx:
-    image: nginx:latest
-    container_name: nginx-lb
-    networks:
-      - default
-    ports:
-      - "8080:80"
-    depends_on:
-      - app
-      - app2
-      - app3
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+  # nginx:
+  #   image: nginx:latest
+  #   container_name: nginx-lb
+  #   networks:
+  #     - default
+  #   ports:
+  #     - "8080:80"
+  #   depends_on:
+  #     - app
+  #     - app2
+  #     - app3
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf
 
   app:
-    build: .
+    build:
+      context: ./monolithique
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
     depends_on:
       - db
       - redis
@@ -29,29 +33,51 @@ services:
     networks:
       - default
   
-  app2:
-    build: .
-    depends_on:
-      - db
-      - redis
-    environment:
-      SPRING_REDIS_HOST: redis
-      SPRING_REDIS_PORT: 6379
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/psql
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: admin
-    networks:
-      - default
+  # app2:
+  #   build:
+  #     context: ./monolithique
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - db
+  #     - redis
+  #   environment:
+  #     SPRING_REDIS_HOST: redis
+  #     SPRING_REDIS_PORT: 6379
+  #     SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/psql
+  #     SPRING_DATASOURCE_USERNAME: admin
+  #     SPRING_DATASOURCE_PASSWORD: admin
+  #   networks:
+  #     - default
 
-  app3:
-    build: .
+  # app3:
+  #   build:
+  #     context: ./monolithique
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - db
+  #     - redis
+  #   environment:
+  #     SPRING_REDIS_HOST: redis
+  #     SPRING_REDIS_PORT: 6379
+  #     SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/psql
+  #     SPRING_DATASOURCE_USERNAME: admin
+  #     SPRING_DATASOURCE_PASSWORD: admin
+  #   networks:
+  #     - default
+    
+  ventes-service:
+    build:
+      context: ./microservices/ventesServices
+      dockerfile: Dockerfile
     depends_on:
-      - db
+      - ventes-db
       - redis
+    ports:
+      - "8081:8080"
     environment:
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/psql
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ventes-db:5432/ventesdb
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: admin
     networks:
@@ -68,7 +94,30 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  ventes-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: ventesdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata-vente:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
   redis:
+    image: redis:latest
+    depends_on:
+      - ventes-db
+    ports:
+      - "6378:6379"
+    command: ["redis-server", "--bind", "0.0.0.0"]
+    networks:
+    - default
+
+  redis-ventes:
     image: redis:latest
     depends_on:
       - db
@@ -101,6 +150,7 @@ services:
 volumes:
   pgdata:
   grafana-storage:
+  pgdata-vente:
 
 networks:
   default:
