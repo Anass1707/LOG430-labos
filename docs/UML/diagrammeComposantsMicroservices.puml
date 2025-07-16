@@ -1,0 +1,65 @@
+@startuml
+' Architecture microservices avec API Gateway
+
+package "Infrastructure" {
+  [NGINX] <<LoadBalancer>>
+  [API Gateway] <<Gateway>>
+  [Redis] <<Cache>>
+  [Prometheus] <<Monitoring>>
+  [Grafana] <<Dashboard>>
+  [PostgreSQL] <<Database>>
+}
+
+' Microservice Vente
+package "Microservice Vente" {
+  [VenteController] <<RestController>>
+  [VenteService] <<Service>>
+  [VenteRepository] <<Repository>>
+}
+
+' Microservice Produit
+package "Microservice Produit" {
+  [ProduitController] <<RestController>>
+  [ProduitService] <<Service>>
+  [ProduitRepository] <<Repository>>
+}
+
+' Microservice Stock
+package "Microservice Stock" {
+  [StockController] <<RestController>>
+  [StockService] <<Service>>
+  [StockRepository] <<Repository>>
+}
+
+' Microservice Rapport
+package "Microservice Rapport" {
+  [RapportController] <<RestController>>
+  [RapportService] <<Service>>
+  [RapportRepository] <<Repository>>
+}
+
+' Flux principal
+[NGINX] -down-> [API Gateway]
+[API Gateway] -down-> [VenteController]
+[API Gateway] -down-> [ProduitController]
+[API Gateway] -down-> [StockController]
+[API Gateway] -down-> [RapportController]
+
+' Accès aux bases et cache
+[VenteService] ..> [Redis]
+[ProduitService] ..> [Redis]
+[StockService] ..> [Redis]
+[RapportService] ..> [Redis]
+
+[VenteRepository] ..> [PostgreSQL]
+[ProduitRepository] ..> [PostgreSQL]
+[StockRepository] ..> [PostgreSQL]
+[RapportRepository] ..> [PostgreSQL]
+
+' Monitoring
+[Prometheus] ..> [API Gateway]
+[Prometheus] ..> [VenteService]
+[Prometheus] ..> [ProduitService]
+[Prometheus] ..> [StockService]
+[Prometheus] ..> [RapportService]
+[Grafana] ..> [Prometheus]
