@@ -1,12 +1,12 @@
-package src.main.java.log430.Labos.Controller.API.Produit;
+package log430.Labos.Controller.API.Produit;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.*;
 
-import src.main.java.log430.Labos.Models.DTOs.ProduitDTO;
-import src.main.java.log430.Labos.Services.Produit.ProduitService;
+import log430.Labos.Models.DTOs.ProduitDTO;
+import log430.Labos.Services.Produit.ProduitService;
 import org.springframework.http.ResponseEntity;
 
 @RestController

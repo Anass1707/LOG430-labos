@@ -1,4 +1,4 @@
-package src.main.java.log430.Labos.Models.Entities.Vente;
+package log430.Labos.Models.Entities.Vente;
 
 
 import jakarta.persistence.*;

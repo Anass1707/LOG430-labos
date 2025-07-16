@@ -1,22 +1,22 @@
-package src.main.java.log430.Labos.Services.Logistique;
+package log430.Labos.Services.Logistique;
 
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import src.main.java.log430.Labos.Models.DTOs.DemandeReapprovisionnementDTO;
-import src.main.java.log430.Labos.Models.DTOs.StockCentralDTO;
-import src.main.java.log430.Labos.Models.Entities.Logistique.DemandeReapprovisionnement;
-import src.main.java.log430.Labos.Models.Entities.Logistique.StockCentral;
-import src.main.java.log430.Labos.Models.Entities.Magasin.Magasin;
-import src.main.java.log430.Labos.Models.Entities.Produit.Produit;
-import src.main.java.log430.Labos.Models.Mappers.DemandeReapprovisionnementMapper;
-import src.main.java.log430.Labos.Models.Mappers.StockCentralMapper;
-import src.main.java.log430.Labos.Repositories.DemandeReapprovisionnementRepository;
-import src.main.java.log430.Labos.Repositories.MagasinRepository;
-import src.main.java.log430.Labos.Repositories.ProduitRepository;
-import src.main.java.log430.Labos.Repositories.StockCentralRepository;
+import log430.Labos.Models.DTOs.DemandeReapprovisionnementDTO;
+import log430.Labos.Models.DTOs.StockCentralDTO;
+import log430.Labos.Models.Entities.Logistique.DemandeReapprovisionnement;
+import log430.Labos.Models.Entities.Logistique.StockCentral;
+import log430.Labos.Models.Entities.Magasin.Magasin;
+import log430.Labos.Models.Entities.Produit.Produit;
+import log430.Labos.Models.Mappers.DemandeReapprovisionnementMapper;
+import log430.Labos.Models.Mappers.StockCentralMapper;
+import log430.Labos.Repositories.DemandeReapprovisionnementRepository;
+import log430.Labos.Repositories.MagasinRepository;
+import log430.Labos.Repositories.ProduitRepository;
+import log430.Labos.Repositories.StockCentralRepository;
 
 @Service
 public class StockCentralService {

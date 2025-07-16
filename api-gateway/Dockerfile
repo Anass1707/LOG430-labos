@@ -5,7 +5,6 @@ WORKDIR /labos
 
 # Copie le pom.xml et les sources
 COPY pom.xml .
-COPY checkstyle.xml .
 COPY src ./src
 
 # Compile l'application et crée un jar (avec dépendances)

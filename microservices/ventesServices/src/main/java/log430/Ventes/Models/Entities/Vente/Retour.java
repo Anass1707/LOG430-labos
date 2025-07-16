@@ -1,6 +1,6 @@
-package src.main.java.log430.Ventes.Models.Entities.Vente;
+package log430.Ventes.Models.Entities.Vente;
 import jakarta.persistence.*;
-import src.main.java.log430.Ventes.Models.Entities.Utilisateur.Utilisateur;
+import log430.Ventes.Models.Entities.Utilisateur.Utilisateur;
 
 @Entity
 @Table(name = "retours")

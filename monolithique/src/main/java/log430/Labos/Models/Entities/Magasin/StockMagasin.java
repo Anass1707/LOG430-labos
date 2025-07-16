@@ -1,7 +1,7 @@
-package src.main.java.log430.Labos.Models.Entities.Magasin;
+package log430.Labos.Models.Entities.Magasin;
 
 import jakarta.persistence.*;
-import src.main.java.log430.Labos.Models.Entities.Produit.Produit;
+import log430.Labos.Models.Entities.Produit.Produit;
 
 @Entity
 @Table(name = "stock_magasin")

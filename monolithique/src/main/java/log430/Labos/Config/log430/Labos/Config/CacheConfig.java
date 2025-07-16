@@ -1,4 +1,4 @@
-package src.main.java.log430.Labos.Config.log430.Labos.Config;
+package log430.Labos.Config.log430.Labos.Config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.DeserializationFeature;

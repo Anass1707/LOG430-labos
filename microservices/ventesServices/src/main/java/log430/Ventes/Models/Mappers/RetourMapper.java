@@ -1,7 +1,7 @@
-package src.main.java.log430.Ventes.Models.Mappers;
+package log430.Ventes.Models.Mappers;
 
-import src.main.java.log430.Ventes.Models.Entities.Vente.Retour;
-import src.main.java.log430.Ventes.Models.DTOs.RetourDTO;
+import log430.Ventes.Models.Entities.Vente.Retour;
+import log430.Ventes.Models.DTOs.RetourDTO;
 
 public class RetourMapper {
     public static RetourDTO toDTO(Retour retour) {

@@ -18,8 +18,5 @@ WORKDIR /labos
 # Copie le jar depuis l'image "builder"
 COPY --from=builder /labos/target/*.jar labos.jar
 
-# Port exposé
-EXPOSE 8080
-
 # Commande de lancement
 ENTRYPOINT ["java", "-jar", "labos.jar"]

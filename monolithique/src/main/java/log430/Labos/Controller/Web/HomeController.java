@@ -1,8 +1,8 @@
-package src.main.java.log430.Labos.Controller.Web;
-import src.main.java.log430.Labos.Repositories.UtilisateurRepository;
-import src.main.java.log430.Labos.Services.Magasin.MagasinService;
-import src.main.java.log430.Labos.Models.DTOs.MagasinDTO;
-import src.main.java.log430.Labos.Models.Entities.Utilisateur.Utilisateur;
+package log430.Labos.Controller.Web;
+import log430.Labos.Repositories.UtilisateurRepository;
+import log430.Labos.Services.Magasin.MagasinService;
+import log430.Labos.Models.DTOs.MagasinDTO;
+import log430.Labos.Models.Entities.Utilisateur.Utilisateur;
 
 import java.util.List;
 import java.util.Optional;

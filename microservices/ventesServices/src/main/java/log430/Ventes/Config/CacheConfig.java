@@ -1,4 +1,4 @@
-package src.main.java.log430.Ventes.Config;
+package log430.Ventes.Config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.DeserializationFeature;

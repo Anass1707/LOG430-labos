@@ -1,7 +1,7 @@
-package src.main.java.log430.Labos.Models.Mappers;
+package log430.Labos.Models.Mappers;
 
-import src.main.java.log430.Labos.Models.Entities.Vente.LigneVente;
-import src.main.java.log430.Labos.Models.DTOs.LigneVenteDTO;
+import log430.Labos.Models.Entities.Vente.LigneVente;
+import log430.Labos.Models.DTOs.LigneVenteDTO;
 
 public class LigneVenteMapper {
     public static LigneVenteDTO toDTO(LigneVente ligneVente) {

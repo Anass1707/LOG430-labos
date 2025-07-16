@@ -1,4 +1,4 @@
-package src.main.java.log430.Ventes.Models.DTOs;
+package log430.Ventes.Models.DTOs;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

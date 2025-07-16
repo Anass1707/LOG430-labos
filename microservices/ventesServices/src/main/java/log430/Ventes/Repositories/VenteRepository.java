@@ -1,9 +1,9 @@
-package src.main.java.log430.Ventes.Repositories;
+package log430.Ventes.Repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
-import src.main.java.log430.Ventes.Models.Entities.Magasin.Magasin;
-import src.main.java.log430.Ventes.Models.Entities.Vente.Vente;
+import log430.Ventes.Models.Entities.Magasin.Magasin;
+import log430.Ventes.Models.Entities.Vente.Vente;
 
 import java.util.Optional;
 

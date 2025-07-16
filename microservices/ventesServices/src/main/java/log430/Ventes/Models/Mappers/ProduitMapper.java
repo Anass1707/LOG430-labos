@@ -1,6 +1,6 @@
-package src.main.java.log430.Ventes.Models.Mappers;
-import src.main.java.log430.Ventes.Models.DTOs.ProduitDTO;
-import src.main.java.log430.Ventes.Models.Entities.Produit.Produit;
+package log430.Ventes.Models.Mappers;
+import log430.Ventes.Models.DTOs.ProduitDTO;
+import log430.Ventes.Models.Entities.Produit.Produit;
 
 public class ProduitMapper {
 

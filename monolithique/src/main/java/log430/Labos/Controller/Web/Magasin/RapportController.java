@@ -1,11 +1,11 @@
-// package src.main.java.log430.Labos.Controller.Web.Magasin;
+// package log430.Labos.Controller.Web.Magasin;
 
-// import src.main.java.log430.Labos.Models.Entities.Magasin.Magasin;
-// import src.main.java.log430.Labos.Models.Entities.Magasin.StockMagasin;
-// import src.main.java.log430.Labos.Models.Entities.Produit.Produit;
-// import src.main.java.log430.Labos.Models.Entities.Vente.Vente;
-// import src.main.java.log430.Labos.Services.Magasin.MagasinService;
-// import src.main.java.log430.Labos.Services.Vente.VenteService;
+// import log430.Labos.Models.Entities.Magasin.Magasin;
+// import log430.Labos.Models.Entities.Magasin.StockMagasin;
+// import log430.Labos.Models.Entities.Produit.Produit;
+// import log430.Labos.Models.Entities.Vente.Vente;
+// import log430.Labos.Services.Magasin.MagasinService;
+// import log430.Labos.Services.Vente.VenteService;
 
 // import org.springframework.stereotype.Controller;
 // import org.springframework.ui.Model;

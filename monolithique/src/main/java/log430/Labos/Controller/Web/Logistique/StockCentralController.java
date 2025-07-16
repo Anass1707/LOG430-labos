@@ -1,4 +1,4 @@
-package src.main.java.log430.Labos.Controller.Web.Logistique;
+package log430.Labos.Controller.Web.Logistique;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
-import src.main.java.log430.Labos.Models.DTOs.DemandeReapprovisionnementDTO;
-import src.main.java.log430.Labos.Models.DTOs.MagasinDTO;
-import src.main.java.log430.Labos.Services.Logistique.StockCentralService;
-import src.main.java.log430.Labos.Services.Magasin.MagasinService;
+import log430.Labos.Models.DTOs.DemandeReapprovisionnementDTO;
+import log430.Labos.Models.DTOs.MagasinDTO;
+import log430.Labos.Services.Logistique.StockCentralService;
+import log430.Labos.Services.Magasin.MagasinService;
 
 @Controller
 @RequestMapping("/stockCentral")

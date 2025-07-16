@@ -1,7 +1,7 @@
-package src.main.java.log430.Labos.Models.Mappers;
+package log430.Labos.Models.Mappers;
 
-import src.main.java.log430.Labos.Models.Entities.Logistique.DemandeReapprovisionnement;
-import src.main.java.log430.Labos.Models.DTOs.DemandeReapprovisionnementDTO;
+import log430.Labos.Models.Entities.Logistique.DemandeReapprovisionnement;
+import log430.Labos.Models.DTOs.DemandeReapprovisionnementDTO;
 
 public class DemandeReapprovisionnementMapper {
     public static DemandeReapprovisionnementDTO toDTO(DemandeReapprovisionnement demande) {

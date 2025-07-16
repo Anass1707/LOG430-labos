@@ -1,4 +1,4 @@
-package src.main.java.log430.Labos.Services.Magasin;
+package log430.Labos.Services.Magasin;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,14 +10,14 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
-import src.main.java.log430.Labos.Models.DTOs.MagasinDTO;
-import src.main.java.log430.Labos.Models.DTOs.StockMagasinDTO;
-import src.main.java.log430.Labos.Models.Entities.Magasin.Magasin;
-import src.main.java.log430.Labos.Models.Entities.Magasin.StockMagasin;
-import src.main.java.log430.Labos.Models.Mappers.MagasinMapper;
-import src.main.java.log430.Labos.Models.Mappers.StockMagasinMapper;
-import src.main.java.log430.Labos.Repositories.MagasinRepository;
-import src.main.java.log430.Labos.Repositories.StockMagasinRepository;
+import log430.Labos.Models.DTOs.MagasinDTO;
+import log430.Labos.Models.DTOs.StockMagasinDTO;
+import log430.Labos.Models.Entities.Magasin.Magasin;
+import log430.Labos.Models.Entities.Magasin.StockMagasin;
+import log430.Labos.Models.Mappers.MagasinMapper;
+import log430.Labos.Models.Mappers.StockMagasinMapper;
+import log430.Labos.Repositories.MagasinRepository;
+import log430.Labos.Repositories.StockMagasinRepository;
 
 @Service
 public class MagasinService {

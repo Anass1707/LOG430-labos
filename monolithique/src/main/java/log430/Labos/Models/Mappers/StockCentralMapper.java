@@ -1,7 +1,7 @@
-package src.main.java.log430.Labos.Models.Mappers;
+package log430.Labos.Models.Mappers;
 
-import src.main.java.log430.Labos.Models.Entities.Logistique.StockCentral;
-import src.main.java.log430.Labos.Models.DTOs.StockCentralDTO;
+import log430.Labos.Models.Entities.Logistique.StockCentral;
+import log430.Labos.Models.DTOs.StockCentralDTO;
 
 public class StockCentralMapper {
     public static StockCentralDTO toDTO(StockCentral stock) {

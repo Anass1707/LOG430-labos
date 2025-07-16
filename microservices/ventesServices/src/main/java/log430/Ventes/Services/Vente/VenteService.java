@@ -1,24 +1,24 @@
-package src.main.java.log430.Ventes.Services.Vente;
+package log430.Ventes.Services.Vente;
 
-import src.main.java.log430.Ventes.Repositories.VenteRepository;
+import log430.Ventes.Repositories.VenteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import src.main.java.log430.Ventes.Models.DTOs.MagasinDTO;
-import src.main.java.log430.Ventes.Models.DTOs.ProduitDTO;
-import src.main.java.log430.Ventes.Models.DTOs.VenteDTO;
-import src.main.java.log430.Ventes.Models.Entities.Magasin.Magasin;
-import src.main.java.log430.Ventes.Models.Entities.Produit.Produit;
-import src.main.java.log430.Ventes.Models.Entities.Vente.LigneVente;
-import src.main.java.log430.Ventes.Models.Entities.Vente.LigneVenteId;
-import src.main.java.log430.Ventes.Models.Entities.Vente.Vente;
-import src.main.java.log430.Ventes.Models.Mappers.MagasinMapper;
-import src.main.java.log430.Ventes.Models.Mappers.ProduitMapper;
-import src.main.java.log430.Ventes.Models.Mappers.VenteMapper;
-import src.main.java.log430.Ventes.Repositories.MagasinRepository;
-import src.main.java.log430.Ventes.Repositories.ProduitRepository;
+import log430.Ventes.Models.DTOs.MagasinDTO;
+import log430.Ventes.Models.DTOs.ProduitDTO;
+import log430.Ventes.Models.DTOs.VenteDTO;
+import log430.Ventes.Models.Entities.Magasin.Magasin;
+import log430.Ventes.Models.Entities.Produit.Produit;
+import log430.Ventes.Models.Entities.Vente.LigneVente;
+import log430.Ventes.Models.Entities.Vente.LigneVenteId;
+import log430.Ventes.Models.Entities.Vente.Vente;
+import log430.Ventes.Models.Mappers.MagasinMapper;
+import log430.Ventes.Models.Mappers.ProduitMapper;
+import log430.Ventes.Models.Mappers.VenteMapper;
+import log430.Ventes.Repositories.MagasinRepository;
+import log430.Ventes.Repositories.ProduitRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

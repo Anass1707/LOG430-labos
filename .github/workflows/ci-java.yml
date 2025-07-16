@@ -38,10 +38,36 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Build project
-        run: mvn clean install -DskipTests
-      - name: Run tests
-        run: mvn test
+      - name: Build monolithique
+        run: |
+          cd monolithique
+          mvn clean install -DskipTests
+
+      - name: Build api-gateway
+        run: |
+          cd api-gateway
+          mvn clean install -DskipTests
+
+      - name: Build ventesServices
+        run: |
+          cd microservices/ventesServices
+          mvn clean install -DskipTests
+
+      - name: Run tests monolithique
+        run: |
+          cd monolithique
+          mvn test
+
+      - name: Run tests api-gateway
+        run: |
+          cd api-gateway
+          mvn test
+
+      - name: Run tests ventesServices
+        run: |
+          cd microservices/ventesServices
+          mvn test
+
   docker:
     name: Build and push Docker image
     runs-on: ubuntu-latest
@@ -60,9 +86,23 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image monolithique
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./monolithique
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/log430_labos:v3
+          tags: ${{ secrets.DOCKER_USERNAME }}/log430_labos-monolithique:v5
+      
+      - name: Build and push Docker image api-gateway
+        uses: docker/build-push-action@v5
+        with:
+          context: ./api-gateway
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/log430_labos-api-gateway:v5
+
+      - name: Build and push Docker image ventesServices
+        uses: docker/build-push-action@v5
+        with:
+          context: ./microservices/ventesServices
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/log430_labos-ventesServices:v5

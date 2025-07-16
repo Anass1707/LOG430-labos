@@ -1,8 +1,8 @@
-package src.main.java.log430.Ventes.Controller.API.Vente;
+package log430.Ventes.Controller.API.Vente;
 
-import src.main.java.log430.Ventes.Models.DTOs.VenteDTO;
-import src.main.java.log430.Ventes.Services.Vente.VenteService;
-import src.main.java.log430.Ventes.Models.Mappers.VenteMapper;
+import log430.Ventes.Models.DTOs.VenteDTO;
+import log430.Ventes.Services.Vente.VenteService;
+import log430.Ventes.Models.Mappers.VenteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,8 @@
-package src.main.java.log430.Ventes.Models.Entities.Produit;
+package log430.Ventes.Models.Entities.Produit;
 import jakarta.persistence.*;
-import src.main.java.log430.Ventes.Models.Entities.Logistique.StockCentral;
-import src.main.java.log430.Ventes.Models.Entities.Magasin.StockMagasin;
-import src.main.java.log430.Ventes.Models.Entities.Vente.LigneVente;
+import log430.Ventes.Models.Entities.Logistique.StockCentral;
+import log430.Ventes.Models.Entities.Magasin.StockMagasin;
+import log430.Ventes.Models.Entities.Vente.LigneVente;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package src.main.java.log430.Ventes;
+package log430.Ventes;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;

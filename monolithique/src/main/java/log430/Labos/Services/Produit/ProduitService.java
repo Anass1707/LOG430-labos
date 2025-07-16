@@ -1,9 +1,9 @@
-package src.main.java.log430.Labos.Services.Produit;
+package log430.Labos.Services.Produit;
 
-import src.main.java.log430.Labos.Models.DTOs.ProduitDTO;
-import src.main.java.log430.Labos.Models.Entities.Produit.Produit;
-import src.main.java.log430.Labos.Models.Mappers.ProduitMapper;
-import src.main.java.log430.Labos.Repositories.ProduitRepository;
+import log430.Labos.Models.DTOs.ProduitDTO;
+import log430.Labos.Models.Entities.Produit.Produit;
+import log430.Labos.Models.Mappers.ProduitMapper;
+import log430.Labos.Repositories.ProduitRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
