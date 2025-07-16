@@ -105,4 +105,4 @@ jobs:
         with:
           context: ./microservices/ventesServices
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/log430_labos-ventesServices:v5
+          tags: ${{ secrets.DOCKER_USERNAME }}/log430_labos-ventes-services:v5
