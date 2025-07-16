@@ -15,8 +15,8 @@ public class SecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable) // Désactive CSRF (utile pour API REST)
                 .authorizeExchange(exchange -> exchange
                         .pathMatchers(
-                            "/product/swagger-ui.html", "/product/v3/api-docs/**",
-                            "/vente/swagger-ui.html", "/vente/v3/api-docs/**"
+                            "/api/v1/produits/swagger-ui.html", "/api/v1/produits/v3/api-docs/**",
+                            "api/v2/ventes/swagger-ui.html", "api/v2/ventes/v3/api-docs/**"
                         ).permitAll()
                         .anyExchange().permitAll() // Tu peux remplacer par .authenticated() si tu veux protéger
                 )
