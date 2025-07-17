@@ -1,176 +1,169 @@
-# Nom
+# Rapport arc42
+
+## Nom
 Anass Chiba
 
-# URL Github
+## URL Github
 
 https://github.com/Anass1707/LOG430-labos
 
-# Analyse et continuité
+## 1. Introduction et objectifs
+Ce projet vise à concevoir et faire évoluer une application backend suivant les bonnes pratiques architecturales. L’objectif est de progresser vers une solution robuste, performante et modulaire.
 
-## Résumer du Lab 0 et 1
-Durant les Labs 0 et 1, l'application a été construite selon une architecture en couches simple et respecte partiellement l'architecture MVC :
+## 2. Contexte et portée
+- **Labo3** : API RESTful monolithique orientée MVC
+- **Labo5** : Système distribué avec microservices, API Gateway, sécurité et logging
 
-- Utilisation de @RestController pour exposer les endpoints.
+## 3. Parties prenantes
+- **Développeur** : Anass Chiba
+- **Utilisateurs** : Prof et chargés de lab pour évaluation
+- **Infrastructure** : Docker, NGINX, Redis, outils de test et observabilité
 
-- Les entités, services et contrôleurs étaient tous organisés dans des dossiers uniques communs (Controller, services, entities).
+## 4. Architecture globale
 
-- La logique métier était relativement directement codée dans les services.
+| Labo       | Type d'architecture           | Éléments clés                                                               |
+|------------|-------------------------------|-----------------------------------------------------------------------------|
+| Labo3      | Monolithe MVC                 | API RESTful, Swagger                                                        |
+| Labo4      | Monolithe optimisé            | Tests de charge K6, Load Balancer NGINX, Cache Redis, Monitoring Prometheus/Grafana |
+| Labo5      | Microservices                 | API Gateway, sécurité CORS, système de logs                                 |
 
-- L’interface utilisateur n’était pas présente (pas de vues HTML), uniquement des échanges JSON (API REST).
+## 5. Décisions architecturales majeures
+- Structure MVC pour lisibilité et modularité
+- Swagger pour la documentation automatique
+- K6 pour les tests de performance
+- NGINX pour l’équilibrage de charge
+- Redis pour l’optimisation des performances
+- Monitoring avec Prometheus & Grafana pour les métriques et la visualisation
+- Migration vers des microservices
+- API Gateway pour la sécurité et la supervision
 
-## Éléments conservés et modifiés
+## 6. Qualités architecturales
+- **Scalabilité** : microservices, NGINX
+- **Performance** : Redis, K6
+- **Documentation** : Swagger
+- **Modularité** : séparation des services
+- **Sécurité** : CORS, Gateway
+- **Observabilité** : système de logs
 
-Pour le labo 2, j'ai conservé l'architecture MVC, j'ai amélioré la structure des dossiers pour favoriser une organisation par domaine pour plus de lisibilité et scalabilité et j'ai passé de @RestController à @Controller pour supporter les vues Thymleaf que j'ai intégré comme interface utilisateur.
+## 7. Déploiement et infrastructure
+- Conteneurisation via Docker
+- NGINX pour la gestion du trafic
+- Redis pour le cache distribué
+- API Gateway en frontal
 
-## Exigences introduites au lab 2
+## 8. Dettes techniques
+- Implémentation d'au moins deux autres microservices
+- Faire une analyse approfondie sur la performance des deux architectures
+- Gestion de la sécurité
+- Implémentation d'au moins 2 autres APIs
+- Ajout des tests
+- Mise à jour du readme
 
-- Ajout d’une interface utilisateur minimaliste via des vues Thymeleaf.
+## 9. Défis rencontrés
+- J'ai perdu beaucoup de temps avec la mise en place de redis. J'ai eu un problème de serialisation et par la suite 
+un problème de desérialisation. J'ai essayé de l'appliquer sur tout mes requêtes mais ce n'était pas necessaire.
+- J'ai pris un peu plus de temps que je pensais pour la configuration de Spring Cloud Gateway.
 
-- Séparation claire des domaines métiers (Logistique, Vente, Magasin, Utilisateur, Produit).
+## 10. Annexe
+### ADRs
+```md
+#  ADR 03: Choix de cache
 
-## Défis architecturaux
+## Statut :
+    Accepté – 15 juillet 2025
 
-* Réorganisation du projet selon DDD.
+## Contexte :
+Dans le cadre du projet LOG430, les microservices manipulent des données provenant de bases de données relationnelles (PostgreSQL).
+Certaines de ces données sont consultées très fréquemment (produits, ventes, etc), mais peu modifiées.
+Afin d’améliorer les performances, réduire la charge sur la base de données, et accélérer les temps de réponse, il fallait mettre en place une stratégie de cache efficace.
 
-* Intégration complète du MVC avec vues (Thymeleaf).
+## Décision :
+J'ai choisi d’utiliser Redis comme système de cache distribué pour ce projet.
 
-* Cohérence transactionnelle entre services.
+## Justification :
+Les raisons de ce choix sont les suivantes :
+- Support natif dans Spring Boot: Intégration facile avec les annotations @Cacheable, @CachePut, @CacheEvict.
+- Facile à déployer avec Docker: Une simple image Redis suffit, ajoutée au docker-compose.yml du projet.
+- Cache distribué: Redis peut être utilisé par plusieurs microservices connectés dans le même réseau Docker.
 
-* Gestion de la croissance de la complexité métier.
+## Conséquences :
+- Redis sera démarré dans Docker via le service redis dans docker-compose.yml.
+
+- Chaque microservice pourra accéder à Redis en utilisant SPRING_REDIS_HOST=redis.
+
+- Les données mises en cache devront être explicitement marquées via les annotations @Cacheable, etc.
 
 
-## Les sous-domaines fonctionnels 
-
-Le système développé pour la gestion des magasins, d'un centre logistique et une maison mère est composé en cinq sous-domaines métiers:
-
-- Logistique:
-Il permet la gestion du stock central et les demandes de réaprovisionnement. Les modèles associés sont: DemandeReaprovisionnement et StockCentral.
-
-- Magasin:
-Il permet de créer les rapports des magasins et la gestion de leurs stocks. Les modèles associés sont: Magasin et StockMagasin.
-
-- Produit:
-Il permet la gestion des produits. Le modèle associé est: Produit.
-
-- Vente:
-Il permet la gestion des ventes et des retours. Les modèles associés sont: Vente, Retour, LigneVente.
-
-- Utilisateur:
-Il permet la gestion des utilisateurs. Le modèle associé est: Utilisateur.
-
-Cette organisation permet une meilleure séparation des responsabilités et une évolution future vers une architecture modulaire ou orientée microservices.
-
-# 1. Introduction et objectifs
-
-Ce projet est une application web de gestion logistique pour une chaîne de magasins. Il permet la gestion centralisée des stocks, le suivi des ventes, le réapprovisionnement, la génération de rapports et la visualisation des performances via un tableau de bord.
-
-**Objectifs principaux :**
-- Optimiser la gestion des stocks entre le centre logistique et les magasins.
-- Faciliter le suivi des ventes.
-- Offrir une interface web simple pour les gestionnaires et employés.
-
----
-
-# 2. Contraintes
-
-- Utilisation de Java, Spring Boot, Thymeleaf, Hibernate/JPA, PostgreSQL
-- Interface web accessible sur navigateur web
-- Synchronisation automatique des données entre le centre et les magasins
-
----
-
-# 3. Contexte
-
-**Diagramme de contexte (simplifié) :**
-
+## Alternatives considérées :
+- Ehcache: Fonctionne uniquement en mémoire locale, non adapté à un environnement Docker multi-services.
+- Memcached: Moins flexible, ne gère pas nativement la persistance et les structures complexes.
 ```
-[Gestionnaire]         [Employé magasin]         [Responsable logistique]
-      |                        |                          |
-      |                        |                          |
-      +------------------------+--------------------------+
-                               |
-                        [Application Web]
-                               |
-                +--------------+--------------+
-                |                             |
-        [Base de données]             [Système d’alerte]
+
+```md
+#  ADR 04: Choix d'API Gateway
+
+## Statut :
+    Accepté – 15 juillet 2025
+
+## Contexte :
+    
+Dans le cadre du projet LOG430, l’architecture cible repose sur plusieurs microservices déployés via Docker :
+
+- un service monolithique (app),
+
+- un service de gestion des ventes (ventes-service),
+
+- potentiellement d’autres services à venir.
+
+Il est nécessaire de mettre en place une API Gateway afin de centraliser :
+
+- les entrées réseau vers les services backend,
+
+- la gestion du routing,
+
+- la sécurité (CORS, authentification),
+
+- le logging des requêtes,
+
+- la scalabilité future.
+## Décision :
+J'ai choisi d'intégrer Spring Cloud Gateway comme API Gateway.
+
+## Justification :
+Les raisons principales de ce choix sont :
+
+- Intégration native avec Spring Boot
+
+    - Compatible avec tous les microservices Spring Boot du projet.
+
+    - Configuration simple via application.properties ou Java.
+- Personnalisation simple
+
+    - Développement de filtres Java très accessible pour gérer CORS, sécurité, logs, etc.
+- Déploiement facile en Docker
+
+    - Il peut directement router vers les services par nom (ventes-service, app, etc.).
+
+## Conséquences :
+
+- Le port exposé pour l’accès aux services sera désormais centralisé via l’API Gateway (ex: localhost:8088/api/v1/...).
+
+- Les services ne seront plus exposés directement aux clients.
+
+- Les futures optimisations comme le caching, ou l’authentification OAuth2 pourront être ajoutées facilement via des filtres Gateway.
+
+## Alternatives considérées :
+
+- Nginx: Nécessite une configuration plus complexe et séparée et moins dynamique.
+- Kong: Puissant, mais complexe à configurer et surdimensionné pour un projet académique.
 ```
-
----
-
-# 4. Solution conceptuelle
-
-- **Gestion des stocks** : Stock central et stocks magasins synchronisés, gestion des ruptures et surstocks.
-- **Réapprovisionnement** : Demandes initiées par les magasins, validées par le centre logistique.
-- **Rapports** : Génération de rapports consolidés sur les ventes, stocks, produits les plus vendus.
-- **Tableau de bord** : Indicateurs clés (alertes, tendances) accessibles aux gestionnaires.
-- **Alertes automatiques** : Notification en cas de seuil critique de stock.
-
----
-
-# 5. Scénarios d’utilisation
-
-- Générer un rapport des ventes
-- Consulter le stock central 
-- Déclencher un réapprovisionnement
-- Visualiser les performances des magasins dans un tableau de bord
-- Mettre à jour les produits depuis la maison mère
-- Approvisionner un magasin depuis le centre logistique
-- Créer un produit
-- Mettre à jour un produit
-- Chercher un produit par nom ou catégorie ou id
-
----
-
-# 6. Architecture logicielle
-
-- **Contrôleurs Spring MVC** : gestion des routes et des vues
-- **Services** : logique métier 
-- **Entités JPA** : Magasin, Produit, StockCentral, StockMagasin, Vente, DemandeReapprovisionnement
-- **Repositories** : accès aux données
-- **Vues Thymeleaf** : pages web pour chaque fonctionnalité
-
----
-
-# 7. Déploiement
-
-- Application packagée en .jar
-- Déploiement sur serveur Linux avec Java 21+, PostgreSQL
-- Accès via navigateur web
-
----
-
-# 8. Qualité et sécurité
-
-- Gestion des erreurs et des exceptions
-- Sauvegarde régulière de la base de données
-
----
-
-# 9. Glossaire
-
-- **Stock central** : stock principal au centre logistique
-- **Stock magasin** : stock local à chaque magasin
-- **Réapprovisionnement** : processus de demande et de transfert de stock
-- **Gestionnaire** : utilisateur ayant accès aux rapports et au tableau de bord
-- **Responsable logistique** : valide les demandes de réapprovisionnement
-
----
-
-# 10. Annexes
-
-- Diagrammes UML (cas d’utilisation, séquence, classes)
-
-<div style="page-break-after: always;"></div>
-
-## Diagrammes
-
+### Diagrammes
 ### Diagramme de classes
 ![Diagramme de classes](img/DiagrammeClasses.png)
 <div style="page-break-after: always;"></div>
 
 ### Diagramme de composants
-![Diagramme de composants](img/diagrammeComposants.png)
+![Diagramme de composants](img/diagrammeComposantsMicroservices.png)
 <div style="page-break-after: always;"></div>
 
 ### Diagramme de séquence : Création d’une demande
@@ -191,10 +184,15 @@ Ce projet est une application web de gestion logistique pour une chaîne de maga
 <div style="page-break-after: always;"></div>
 
 ### Diagramme de deploiement
-![Diagramme de deploiement](img/diagrammeDeploiement-3-tiers.png)
+![Diagramme de deploiement](img/diagrammeDeploiementMicroservices.png)
 <div style="page-break-after: always;"></div>
 
 ### Diagramme de cas d'utilisation
 ![Diagramme de cas d'utilisation](img/diagrammeCasUtilisation.png)
+
+---
+## Commentaires:
+- Labos très intéréssants, j'ai utilisé de nouvelles technologies et j'ai expérimenté de nouvels outils que je n'ai pas eu encore la chance d'explorer sur le marché d'emploi.
+- J'aurai aimé implémenté plus de chose mais j'ai pris du retard durant les 2 semaines d'intras et une semaine ou j'étais malade.
 
 ---
