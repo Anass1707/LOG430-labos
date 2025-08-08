@@ -1,62 +1,91 @@
-@startuml
+@startuml DiagrammeDeploiement
 
-node "Clients Web" {
-  artifact "Navigateurs web"
+node "Load Balancer" {
+  component "NGINX" <<LoadBalancer>>
 }
 
-node "Load Balancer" as lb {
-  component "NGINX"
+node "API Gateway Server" {
+  component "API Gateway" <<Gateway>>
 }
 
-node "Cluster API" {
-  node "Instance API 1" {
-    component "Controllers REST"
-    component "Services Métier"
-    component "Repositories"
-  }
-  node "Instance API 2" {
-    component "Controllers REST"
-    component "Services Métier"
-    component "Repositories"
-  }
-  node "Instance API 3" {
-    component "Controllers REST"
-    component "Services Métier"
-    component "Repositories"
-  }
+node "Saga Orchestrator" {
+  component "SagaOrchestrator" <<Service>>
 }
 
-node "Cache Distribué" {
-  database "Redis"
+node "Microservice Vente" {
+  component "VenteController" <<RestController>>
+  component "VenteService" <<Service>>
+  component "VenteRepository" <<Repository>>
 }
 
-node "Base de données" {
-  database "PostgreSQL"
+node "Microservice Produit" {
+  component "ProduitController" <<RestController>>
+  component "ProduitService" <<Service>>
+  component "ProduitRepository" <<Repository>>
 }
 
-node "Monitoring" {
-  component "Prometheus"
-  component "Grafana"
+node "Microservice Stock" {
+  component "StockController" <<RestController>>
+  component "StockService" <<Service>>
+  component "StockRepository" <<Repository>>
 }
 
-"Navigateurs web" --> lb : HTTP/HTTPS
+node "Microservice Rapport" {
+  component "RapportController" <<RestController>>
+  component "RapportService" <<Service>>
+  component "RapportRepository" <<Repository>>
+}
 
-"Grafana" --> "Prometheus" : PromQL
+node "Cache Server" {
+  component "Redis" <<Cache>>
+}
 
-lb --> "Instance API 1" : HTTP
-lb --> "Instance API 2" : HTTP
-lb --> "Instance API 3" : HTTP
+node "Monitoring Server" {
+  component "Prometheus" <<Monitoring>>
+  component "Grafana" <<Dashboard>>
+}
 
-"Instance API 1" --> "Redis" : Cache
-"Instance API 2" --> "Redis" : Cache
-"Instance API 3" --> "Redis" : Cache
+node "Database Produit" {
+  component "Produit_PostgreSQL" <<Database>>
+}
 
-"Instance API 1" --> "PostgreSQL" : JDBC
-"Instance API 2" --> "PostgreSQL" : JDBC
-"Instance API 3" --> "PostgreSQL" : JDBC
+node "Database Vente" {
+  component "Vente_PostgreSQL" <<Database>>
+}
 
-"Prometheus" --> "Instance API 1" : /actuator/prometheus
-"Prometheus" --> "Instance API 2" : /actuator/prometheus
-"Prometheus" --> "Instance API 3" : /actuator/prometheus
+node "Database Stock" {
+  component "Stock_PostgreSQL" <<Database>>
+}
+node "Database Rapport" {
+  component "Rapport_PostgreSQL" <<Database>>
+}
+
+' Connexions principales
+"NGINX" --> "API Gateway"
+"API Gateway" --> "SagaOrchestrator"
+
+"SagaOrchestrator" --> "VenteService"
+"SagaOrchestrator" --> "ProduitService"
+"SagaOrchestrator" --> "StockService"
+"SagaOrchestrator" --> "RapportService"
+
+' Accès au cache
+"VenteService" ..> "Redis"
+"ProduitService" ..> "Redis"
+"StockService" ..> "Redis"
+"RapportService" ..> "Redis"
+
+' Monitoring
+"Prometheus" ..> "API Gateway"
+"Prometheus" ..> "VenteService"
+"Prometheus" ..> "ProduitService"
+"Prometheus" ..> "StockService"
+"Prometheus" ..> "RapportService"
+"Prometheus" ..> "SagaOrchestrator"
+"Grafana" ..> "Prometheus"
+"VenteRepository" ..> "Vente_PostgreSQL"
+"ProduitRepository" ..> "Produit_PostgreSQL"
+"StockRepository" ..> "Stock_PostgreSQL"
+"RapportRepository" ..> "Rapport_PostgreSQL"
 
 @enduml

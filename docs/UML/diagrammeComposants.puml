@@ -1,82 +1,73 @@
 @startuml
+' Architecture microservices orchestrée avec publication d’événements via RabbitMQ
 
 package "Infrastructure" {
   [NGINX] <<LoadBalancer>>
+  [API Gateway] <<Gateway>>
+  [RabbitMQ] <<MessageBroker>>
   [Redis] <<Cache>>
   [Prometheus] <<Monitoring>>
   [Grafana] <<Dashboard>>
-  [PostgreSQL] <<Database>>
 }
 
-package "Présentation API" {
+package "Service Saga Orchestrateur" {
+  [SagaOrchestrator] <<Service>>
+  [EventPublisher] <<Publisher>>
+}
+
+package "Microservice Vente" {
   [VenteController] <<RestController>>
-  [RapportController] <<RestController>>
-  [StockCentralController] <<RestController>>
-  [ProduitController] <<RestController>>
-}
-
-package "Logique Métier" {
-  package "Domaine Magasin" {
-    [MagasinService] <<Service>>
-  }
-  package "Domaine Logistique" {
-    [StockCentralService] <<Service>>
-  }
-  package "Domaine Vente" {
-    [VenteService] <<Service>>
-  }
-  package "Domaine Produit" {
-    [ProduitService] <<Service>>
-  }
-}
-
-package "Persistance" {
-  [MagasinRepository] <<Repository>>
+  [VenteService] <<Service>>
   [VenteRepository] <<Repository>>
-  [StockCentralRepository] <<Repository>>
-  [DemandeReapprovisionnementRepository] <<Repository>>
-  [ProduitRepository] <<Repository>>
-  [StockMagasinRepository] <<Repository>>
 }
 
-' --- Relations ---
+package "Microservice Produit" {
+  [ProduitController] <<RestController>>
+  [ProduitService] <<Service>>
+  [ProduitRepository] <<Repository>>
+}
 
-[NGINX] -down-> [VenteController]
-[NGINX] -down-> [RapportController]
-[NGINX] -down-> [StockCentralController]
-[NGINX] -down-> [ProduitController]
+package "Microservice Stock" {
+  [StockController] <<RestController>>
+  [StockService] <<Service>>
+  [StockRepository] <<Repository>>
+}
 
-[Prometheus] --> [VenteController] : /actuator/prometheus
-[Prometheus] --> [ProduitController] : /actuator/prometheus
-[Grafana] --> [Prometheus]
 
-[Redis] <.. [MagasinService] : @Cacheable
-[Redis] <.. [ProduitService] : @Cacheable
+package "Microservice Rapport" {
+  [RapportController] <<RestController>>
+  [RapportService] <<Service>>
+  [RapportRepository] <<Repository>>
+}
 
-[VenteController] -down-> [VenteService]
-[RapportController] -down-> [MagasinService]
-[StockCentralController] -down-> [MagasinService]
-[RapportController] -down-> [VenteService]
-[StockCentralController] -down-> [StockCentralService]
-[ProduitController] -down-> [ProduitService]
+' Flux principal
+[NGINX] -down-> [API Gateway]
+[API Gateway] -down-> [SagaOrchestrator]
 
-[MagasinService] -up-> [MagasinRepository]
-[MagasinService] -up-> [DemandeReapprovisionnementRepository]
-[StockCentralService] -up-> [StockCentralRepository]
-[StockCentralService] -up-> [DemandeReapprovisionnementRepository]
-[StockCentralService] -up-> [ProduitRepository]
-[StockCentralService] -up-> [MagasinRepository]
-[VenteService] -up-> [VenteRepository]
-[VenteService] -up-> [MagasinRepository]
-[VenteService] -up-> [ProduitRepository]
-[VenteService] -up-> [StockMagasinRepository]
-[ProduitService] -up-> [ProduitRepository]
+' Saga appelle directement les services
+[SagaOrchestrator] -down-> [VenteController]
+[SagaOrchestrator] -down-> [ProduitController]
+[SagaOrchestrator] -down-> [StockController]
+[SagaOrchestrator] -down-> [RapportController]
 
-[MagasinRepository] -down-> [PostgreSQL]
-[VenteRepository] -down-> [PostgreSQL]
-[StockCentralRepository] -down-> [PostgreSQL]
-[DemandeReapprovisionnementRepository] -down-> [PostgreSQL]
-[ProduitRepository] -down-> [PostgreSQL]
-[StockMagasinRepository] -down-> [PostgreSQL]
+' Saga publie des événements après chaque étape
+[SagaOrchestrator] --> [EventPublisher] : publish(type, transactionId)
+
+[EventPublisher] --> [RabbitMQ] : envoi message
+
+' Monitoring
+[Prometheus] .down.> [API Gateway]
+[Prometheus] .down.> [SagaOrchestrator]
+[Prometheus] .down.> [VenteController]
+[Prometheus] .down.> [ProduitController]
+[Prometheus] .down.> [StockController]
+[Prometheus] .down.> [RapportController]
+[Grafana] ..> [Prometheus]
+
+' Accès au cache
+[VenteService] .up.> [Redis]
+[ProduitService] .up.> [Redis]
+[StockService] .up.> [Redis]
+[RapportService] .up.> [Redis]
 
 @enduml

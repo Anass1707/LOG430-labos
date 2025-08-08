@@ -71,16 +71,8 @@ package "Domaine Logistique" {
   }
 }
 
-Utilisateur "1" -right-> "*" Vente : effectue >
-Utilisateur "1" -right-> "*" Retour : effectue >
-Utilisateur "1" --> "*" DemandeReapprovisionnement : effectue >
 Vente "1" *-- "*" LigneVente : contient >
 LigneVente "*" --> "1" Produit : concerne >
-Vente "*" --> "1" Magasin : liées à >
 Retour "*" --> "1" Vente : annule >
 Magasin "1" *-- "*" StockMagasin : possède >
-StockMagasin "*" -right-> "1" Produit : concerne >
-StockCentral "*" --> "1" Produit : concerne >
-DemandeReapprovisionnement "*" --> "1" Magasin : concerne >
-DemandeReapprovisionnement "*" --> "1" Produit : concerne >
 @enduml

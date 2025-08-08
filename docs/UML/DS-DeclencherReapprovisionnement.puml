@@ -1,52 +1,66 @@
 @startuml
-
 actor Utilisateur
-participant "StockCentralController" as Controller
-participant "StockCentralService" as Service
-participant "ProduitRepository" as ProdRepo
-participant "StockCentralRepository" as StockRepo
-participant "DemandeRepository" as DemandeRepo
-participant "StockCentral"
-participant "Magasin"
-participant "Produit"
-participant "DemandeReapprovisionnement"
+participant "NGINX"
+participant "API Gateway"
+participant "SagaController"
+participant "SagaService"
+participant "EventPublisher"
 
-Utilisateur -> Controller : POST /stockCentral/demande\n(magasinId, produitId, quantite)
-activate Controller
-Controller -> Service : creerDemande(magasinId, produitId, quantite)
-activate Service
+participant "ProduitController"
+participant "ProduitService"
 
-Service -> StockRepo : findByProduitId(produitId)
-activate StockRepo
-StockRepo --> Service : StockCentral
-deactivate StockRepo
+participant "MagasinController"
+participant "MagasinService"
 
+participant "LogistiqueController"
+participant "LogistiqueService"
 
-    Service -> ProdRepo : findById(produitId)
-    activate ProdRepo
-    ProdRepo --> Service : Optional<Produit>
-    deactivate ProdRepo
+Utilisateur -> NGINX : POST /demande-reapprovisionnement
+NGINX -> "API Gateway" : routage vers orchestrateur
+"API Gateway" -> SagaController : POST /orchestration/demande
+activate SagaController
 
-    Service -> DemandeReapprovisionnement : new
-    Service -> DemandeReapprovisionnement : setMagasin(magasin)
-    Service -> DemandeReapprovisionnement : setProduit(produit)
-    Service -> DemandeReapprovisionnement : setQuantiteDemandee(quantite)
-    Service -> DemandeReapprovisionnement : setDateDemande(new Date())
-    Service -> DemandeReapprovisionnement : setStatut("EN_ATTENTE")
+SagaController -> SagaService : executeSaga(context)
+activate SagaService
 
-    Service -> DemandeRepo : save(demande)
-    activate DemandeRepo
-    DemandeRepo --> Service
-    deactivate DemandeRepo
+SagaService -> EventPublisher : publishEvent("SAGA_STARTED")
 
-    Service -> StockCentral : setQuantite(qté - qtéDemandée)
-    Service -> StockRepo : save(stockCentral)
-    activate StockRepo
-    StockRepo --> Service
-    deactivate StockRepo
+' Appel au microservice Produit
+SagaService -> ProduitController : GET /api/v2/produits/1
+activate ProduitController
+ProduitController -> ProduitService : getProduit(1)
+activate ProduitService
+ProduitService --> ProduitController : produit trouvé
+deactivate ProduitService
+ProduitController --> SagaService : 200 OK
+deactivate ProduitController
+SagaService -> EventPublisher : publishEvent("PRODUCT_SUCCESS")
 
+' Appel au microservice Magasin
+SagaService -> MagasinController : GET /api/v2/magasins/1
+activate MagasinController
+MagasinController -> MagasinService : getMagasin(1)
+activate MagasinService
+MagasinService --> MagasinController : magasin trouvé
+deactivate MagasinService
+MagasinController --> SagaService : 200 OK
+deactivate MagasinController
+SagaService -> EventPublisher : publishEvent("STORE_SUCCESS")
 
-deactivate Service
-Controller --> Utilisateur : Redirect vers /stockCentral?magasinId=...
-deactivate Controller
+' Appel au microservice Logistique
+SagaService -> LogistiqueController : GET /api/v2/logistique/stockProduit/1/20
+activate LogistiqueController
+LogistiqueController -> LogistiqueService : verifierStock(1, 20)
+activate LogistiqueService
+LogistiqueService --> LogistiqueController : stock suffisant
+deactivate LogistiqueService
+LogistiqueController --> SagaService : 200 OK
+deactivate LogistiqueController
+SagaService -> EventPublisher : publishEvent("LOGISTIQUE_SUCCESS")
+
+SagaService -> EventPublisher : publishEvent("SAGA_SUCCESS")
+deactivate SagaService
+SagaController --> "API Gateway" : 200 OK
+deactivate SagaController
+"API Gateway" --> Utilisateur : réponse JSON
 @enduml
