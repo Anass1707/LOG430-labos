@@ -6,6 +6,8 @@ import org.springframework.web.client.RestTemplate;
 
 import log430.saga.SagaContext;
 import log430.saga.SagaState;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class SagaService {
@@ -22,17 +24,20 @@ public class SagaService {
         this.eventPublisher = eventPublisher;
     }
 
-    public void executeSaga(SagaContext context) {
+    public Map<String, Object> executeSaga(SagaContext context) {
+        Map<String, Object> result = new HashMap<>();
         try {
             context.transitionTo(SagaState.STARTED);
             eventPublisher.publishEvent("SAGA_STARTED", context.getTransactionId());
             ResponseEntity<String> responseA = restTemplate.getForEntity(serviceProduct + "/1" /*context.getTransactionId()*/, String.class);
+            result.put("productResponse", responseA.getBody());
 
             if (responseA.getStatusCode().is2xxSuccessful()) {
                 eventPublisher.publishEvent("PRODUCT_SUCCESS", context.getTransactionId());
                 context.transitionTo(SagaState.PRODUCT_SUCCESS);
 
                 ResponseEntity<String> responseB = restTemplate.getForEntity(serviceStore + "/1", String.class);
+                result.put("storeResponse", responseB.getBody());
                 if (responseB.getStatusCode().is2xxSuccessful()) {
                     eventPublisher.publishEvent("STORE_SUCCESS", context.getTransactionId());
                     context.transitionTo(SagaState.STORE_SUCCESS);
@@ -41,7 +46,7 @@ public class SagaService {
                     context.transitionTo(SagaState.FAILED);
                 }
                 ResponseEntity<String> responseC = restTemplate.getForEntity(serviceLogistique + "/1/20", String.class);
-
+                result.put("logistiqueResponse", responseC.getBody());
                 if (responseC.getStatusCode().is2xxSuccessful()) {
                     eventPublisher.publishEvent("LOGISTIQUE_SUCCESS", context.getTransactionId());
                     context.transitionTo(SagaState.LOGISTIQUE_SUCCESS);
@@ -60,5 +65,6 @@ public class SagaService {
             context.transitionTo(SagaState.ERROR);
             System.err.println("Erreur Saga " + context.getTransactionId() + " : " + e.getMessage());
         }
+        return result;
     }
 }

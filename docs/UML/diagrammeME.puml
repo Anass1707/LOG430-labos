@@ -1,0 +1,24 @@
+@startuml
+[*] --> DemandeReapprovisionnement : Début Saga
+
+DemandeReapprovisionnement --> ProduitVerifie : Produit trouvé
+DemandeReapprovisionnement --> Echec : Erreur produit
+
+ProduitVerifie --> MagasinVerifie : Magasin trouvé
+ProduitVerifie --> Echec : Erreur magasin
+
+MagasinVerifie --> StockConfirme : Stock logistique validé (stock disponnible pour la demmande)
+MagasinVerifie --> Echec : Erreur logistique
+
+StockConfirme --> Succès : Saga complétée
+StockConfirme --> Echec : Erreur
+
+Echec --> [*]
+Succès --> [*]
+
+state Echec {
+    [*] --> Compensation
+    Compensation --> FinEchec
+    FinEchec --> [*]
+}
+@enduml

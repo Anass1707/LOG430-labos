@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import log430.saga.SagaContext;
 import log430.saga.Service.SagaService;
+import java.util.Map;
 
 @RestController
 @RequestMapping("saga")
@@ -23,10 +24,10 @@ public class SagaController {
     }
 
     @GetMapping("/start")
-    public ResponseEntity<Void> startSaga() {
+    public ResponseEntity<Map<String, Object>> startSaga() {
         SagaContext context = new SagaContext(UUID.randomUUID().toString());
-        sagaService.executeSaga(context);
-        return ResponseEntity.ok().build();
+        Map<String, Object> rep = sagaService.executeSaga(context);
+        return ResponseEntity.ok(rep);
     }
 
 }
